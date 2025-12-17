@@ -15,7 +15,7 @@ function WelcomeScreen() {
       {/* LEGO Logo - Top Left */}
       <div style={{
         position: 'absolute',
-        top: '1.5rem',
+        top: '1.625rem',
         left: '1.5rem',
         zIndex: 10
       }}>
@@ -23,24 +23,22 @@ function WelcomeScreen() {
           src={logoLego}
           alt="Edgar Allan LEGO Logo"
           style={{
-            width: '10rem',
+            width: '10.0375rem',
             height: 'auto'
           }}
           className="welcome-logo"
         />
       </div>
 
-      {/* Main Content - Responsive Container */}
+      {/* Main Content - Absolute positioned to match Figma */}
       <div
         style={{
+          position: 'absolute',
+          left: '21.875rem',
+          top: '11.5rem',
           display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
           gap: '5.75rem',
-          padding: '11.5rem 3rem 0',
-          minHeight: '100vh',
-          maxWidth: '87.5rem',
-          margin: '0 auto'
+          alignItems: 'flex-end'
         }}
         className="welcome-content"
       >
@@ -50,8 +48,8 @@ function WelcomeScreen() {
             display: 'flex',
             flexDirection: 'column',
             gap: '4.375rem',
-            maxWidth: '29.1875rem',
-            flex: '1 1 auto'
+            width: '29.1875rem',
+            flexShrink: 0
           }}
           className="welcome-text"
         >
@@ -68,13 +66,15 @@ function WelcomeScreen() {
                 fontWeight: 600,
                 fontSize: '3.75rem',
                 lineHeight: '4.25rem',
-                color: 'black',
-                margin: 0
+                color: '#000000',
+                margin: 0,
+                height: '9.25rem',
+                width: '100%'
               }}
               className="welcome-heading"
             >
-              It's time to<br />
-              build together<br />
+              It's time to <br />
+              build together <br />
               in 2026!
             </h1>
 
@@ -82,11 +82,13 @@ function WelcomeScreen() {
             <p
               style={{
                 fontFamily: 'Epilogue, sans-serif',
+                fontWeight: 400,
                 fontSize: '1.125rem',
                 lineHeight: 1.2,
-                color: 'black',
+                color: '#000000',
                 margin: 0,
-                maxWidth: '26.3125rem'
+                width: '26.3125rem',
+                height: '4.125rem'
               }}
               className="welcome-description"
             >
@@ -98,24 +100,25 @@ function WelcomeScreen() {
           <button
             onClick={() => navigate('/build/step/1')}
             style={{
-              backgroundColor: 'black',
+              backgroundColor: '#000000',
               color: '#fefff8',
               padding: '0.84375rem 1.875rem',
               height: '4.25rem',
-              width: '100%',
-              maxWidth: '20.375rem',
-              borderRadius: '100px',
+              width: '20.375rem',
+              borderRadius: '6.25rem',
               fontFamily: 'Petrona, serif',
               fontWeight: 500,
               fontStyle: 'italic',
               fontSize: '1.5rem',
+              lineHeight: 'normal',
               border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'transform 0.2s',
-              flexShrink: 0
+              flexShrink: 0,
+              overflow: 'hidden'
             }}
             className="welcome-button"
             onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
@@ -129,12 +132,8 @@ function WelcomeScreen() {
         <div
           style={{
             position: 'relative',
-            width: '25rem',
-            height: '28.125rem',
             flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            lineHeight: 0
           }}
           className="welcome-illustration"
         >
@@ -142,9 +141,10 @@ function WelcomeScreen() {
             src={edgarLego}
             alt="Edgar LEGO Character"
             style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain'
+              display: 'block',
+              width: 'auto',
+              height: 'auto',
+              maxWidth: 'none'
             }}
           />
         </div>
@@ -152,18 +152,25 @@ function WelcomeScreen() {
 
       {/* Media Queries via inline styles */}
       <style>{`
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
           .welcome-content {
+            left: 3rem !important;
             gap: 3rem !important;
-            padding: 8rem 2rem 0 !important;
+          }
+          .welcome-text {
+            width: 25rem !important;
           }
           .welcome-heading {
             font-size: 2.5rem !important;
             line-height: 3rem !important;
+            height: auto !important;
           }
-          .welcome-illustration {
+          .welcome-description {
+            width: 22rem !important;
+            height: auto !important;
+          }
+          .welcome-button {
             width: 18rem !important;
-            height: 20rem !important;
           }
         }
 
@@ -172,32 +179,39 @@ function WelcomeScreen() {
             width: 6rem !important;
           }
           .welcome-content {
+            position: static !important;
             flex-direction: column !important;
             align-items: center !important;
             gap: 2rem !important;
             padding: 6rem 1.5rem 2rem !important;
+            margin: 0 auto !important;
           }
           .welcome-text {
             gap: 2rem !important;
-            max-width: 100% !important;
+            width: 100% !important;
+            max-width: 28rem !important;
             align-items: center !important;
             text-align: center !important;
           }
           .welcome-heading {
             font-size: 2rem !important;
             line-height: 2.5rem !important;
+            height: auto !important;
           }
           .welcome-description {
             font-size: 1rem !important;
+            width: 100% !important;
+            height: auto !important;
           }
           .welcome-button {
-            max-width: 100% !important;
+            width: 100% !important;
+            max-width: 20rem !important;
             font-size: 1.25rem !important;
             height: 3.5rem !important;
           }
-          .welcome-illustration {
+          .welcome-illustration img {
             width: 15rem !important;
-            height: 17rem !important;
+            height: auto !important;
           }
         }
 
@@ -206,9 +220,8 @@ function WelcomeScreen() {
             font-size: 1.75rem !important;
             line-height: 2.25rem !important;
           }
-          .welcome-illustration {
+          .welcome-illustration img {
             width: 12rem !important;
-            height: 14rem !important;
           }
         }
       `}</style>
