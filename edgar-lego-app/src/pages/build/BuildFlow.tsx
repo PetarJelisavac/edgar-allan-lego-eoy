@@ -1,10 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import { useBuildStore } from '../../store/buildStore';
 import WelcomeScreen from './WelcomeScreen';
 import BuildStep from './BuildStep';
-import QuestionStep from './QuestionStep';
-import VideoStep from './VideoStep';
-import CompletionStep from './CompletionStep';
+import InstructionStep from './InstructionStep';
 import MusicToggle from '../../components/common/MusicToggle';
 
 function BuildFlow() {
@@ -18,9 +15,7 @@ function BuildFlow() {
       <Routes>
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="step/:stepId" element={<BuildStep />} />
-        <Route path="question/:questionId" element={<QuestionStep />} />
-        <Route path="video/:videoId" element={<VideoStep />} />
-        <Route path="complete" element={<CompletionStep />} />
+        <Route path="instruction/:stepId" element={<InstructionStep />} />
       </Routes>
     </div>
   );

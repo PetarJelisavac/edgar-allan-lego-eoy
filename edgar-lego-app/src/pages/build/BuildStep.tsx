@@ -15,6 +15,7 @@ import brickWine from '../../assets/images/brick-wine.svg';
 import brickSunshine from '../../assets/images/brick-sunshine.svg';
 import brickRojo from '../../assets/images/brick-rojo.svg';
 import brickCoal from '../../assets/images/brick-coal.svg';
+import arrowBack from '../../assets/images/arrow-back.svg';
 
 const colorOptions = [
   { name: 'Baddy Blue', background: colorBaddyBlueBg, brick: brickBaddyBlue },
@@ -41,6 +42,10 @@ function BuildStep() {
     setSelectedColor(colorName);
   };
 
+  const handleBack = () => {
+    navigate('/build');
+  };
+
   const handleNext = () => {
     if (!selectedColor) return;
 
@@ -48,15 +53,13 @@ function BuildStep() {
     const nextIndex = currentStepIndex + 1;
 
     if (nextIndex >= buildSteps.length) {
-      navigate('/build/complete');
+      // TODO: Navigate to completion page when ready
+      navigate('/build');
     } else {
       const nextStep = buildSteps[nextIndex];
-      if (nextStep.type === 'question') {
-        navigate(`/build/question/${nextIndex}`);
-      } else if (nextStep.type === 'video') {
-        navigate(`/build/video/${nextIndex}`);
-      } else {
-        navigate(`/build/step/${nextIndex}`);
+      if (nextStep.type === 'build') {
+        // Navigate to instruction step for build types
+        navigate(`/build/instruction/${nextIndex}`);
       }
     }
   };
@@ -190,6 +193,52 @@ function BuildStep() {
           </div>
         );
       })}
+
+      {/* Back Button */}
+      <button
+        onClick={handleBack}
+        style={{
+          position: 'fixed',
+          bottom: '3rem',
+          left: '3rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '1px solid #939393',
+          borderRadius: '80px',
+          padding: '34px 41px',
+          background: 'transparent',
+          cursor: 'pointer',
+          transition: 'transform 0.2s',
+          zIndex: 10
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      >
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transform: 'rotate(180deg)'
+        }}>
+          <div style={{
+            width: '27px',
+            height: '14.72px',
+            position: 'relative'
+          }}>
+            <img
+              src={arrowBack}
+              alt="Back"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                maxWidth: 'none'
+              }}
+            />
+          </div>
+        </div>
+      </button>
 
       {/* Continue Button - appears when color is selected */}
       {selectedColor && (
