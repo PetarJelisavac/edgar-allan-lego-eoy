@@ -1,23 +1,30 @@
 // 1x2 LEGO Brick Component
-import brick1x2 from '../../assets/images/brick-1x2.svg';
+import type { BrickColorPalette } from '../../store/buildStore';
 
 interface Brick1x2Props {
   style?: React.CSSProperties;
+  colorPalette?: BrickColorPalette;
 }
 
-function Brick1x2({ style }: Brick1x2Props) {
+function Brick1x2({ style, colorPalette }: Brick1x2Props) {
+  const primary = colorPalette?.primary || '#0080FF';
+  const secondary = colorPalette?.secondary || '#005FBE';
+  const tertiary = colorPalette?.tertiary || '#006DDA';
+  const highlight = colorPalette?.highlight || '#169AFF';
+
   return (
-    <img
-      src={brick1x2}
-      alt="LEGO 1x2 brick"
-      style={{
-        display: 'block',
-        width: '100%',
-        height: '100%',
-        maxWidth: 'none',
-        ...style
-      }}
-    />
+    <svg width="60" height="81" viewBox="0 0 60 81" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+      <path d="M0.259772 17L30.2598 33.0551V74.5129L0.259772 58.6935V17Z" fill={tertiary}/>
+      <path d="M59.5 16.7451L30.0009 32.5971V74.5003L59.5 58.7005V16.7451Z" fill={secondary}/>
+      <path d="M58.9795 17.0005L29.999 33.0034L0.526367 17.1021L29.999 1.19971L58.9795 17.0005Z" fill={primary} stroke="black" strokeWidth="0.5"/>
+      <path d="M29.5 10.3213C32.9098 10.3213 35.9854 11.2328 38.2012 12.6934C40.4189 14.1553 41.75 16.147 41.75 18.3115C41.75 20.4761 40.4189 22.4677 38.2012 23.9297C35.9854 25.3903 32.9098 26.3018 29.5 26.3018C26.0902 26.3018 23.0146 25.3903 20.7988 23.9297C18.5811 22.4677 17.25 20.4761 17.25 18.3115C17.25 16.147 18.5811 14.1553 20.7988 12.6934C23.0146 11.2328 26.0902 10.3213 29.5 10.3213Z" fill={secondary} stroke="black" strokeWidth="0.5"/>
+      <mask id="path-5-inside-1_70_15849" fill="white">
+        <path d="M17 10.9868H42V18.3115H17V10.9868Z"/>
+      </mask>
+      <path d="M17 10.9868H42V18.3115H17V10.9868Z" fill={secondary}/>
+      <path d="M42 10.9868H41.5V18.3115H42H42.5V10.9868H42ZM17 18.3115H17.5V10.9868H17H16.5V18.3115H17Z" fill="black" mask="url(#path-5-inside-1_70_15849)"/>
+      <path d="M29.5 3.91211C32.9098 3.91211 35.9854 4.82357 38.2012 6.28418C40.4189 7.74616 41.75 9.73778 41.75 11.9023C41.75 14.0669 40.4189 16.0585 38.2012 17.5205C35.9854 18.9811 32.9098 19.8926 29.5 19.8926C26.0902 19.8926 23.0146 18.9811 20.7988 17.5205C18.5811 16.0585 17.25 14.0669 17.25 11.9023C17.25 9.73778 18.5811 7.74616 20.7988 6.28418C23.0146 4.82357 26.0902 3.91211 29.5 3.91211Z" fill={highlight} stroke="black" strokeWidth="0.5"/>
+    </svg>
   );
 }
 

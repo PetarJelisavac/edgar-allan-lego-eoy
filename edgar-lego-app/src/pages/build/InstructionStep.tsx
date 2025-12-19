@@ -8,7 +8,11 @@ import instructionPlaceholder from '../../assets/images/instruction-placeholder.
 import audioIcon from '../../assets/images/audio-icon.svg';
 import arrowBack from '../../assets/images/arrow-back.svg';
 
-import brickSingle from '../../assets/images/brick-baddy-blue.svg';
+import brickBaddyBlue from '../../assets/images/brick-baddy-blue.svg';
+import brickWine from '../../assets/images/brick-wine.svg';
+import brickSunshine from '../../assets/images/brick-sunshine.svg';
+import brickRojo from '../../assets/images/brick-rojo.svg';
+import brickCoal from '../../assets/images/brick-coal.svg';
 import Brick1x2 from '../../components/bricks/Brick1x2';
 import Brick2x1 from '../../components/bricks/Brick2x1';
 import Brick2x2 from '../../components/bricks/Brick2x2';
@@ -16,15 +20,38 @@ import Brick3x1 from '../../components/bricks/Brick3x1';
 import Brick4x1 from '../../components/bricks/Brick4x1';
 import Brick4x2 from '../../components/bricks/Brick4x2';
 import Brick6x1 from '../../components/bricks/Brick6x1';
+import { brickColorPalettes, type BrickColorName } from '../../store/buildStore';
 
 function InstructionStep() {
   const { stepId } = useParams();
   const navigate = useNavigate();
-  const { markStepCompleted } = useBuildStore();
+  const { markStepCompleted, selectedBrickColor } = useBuildStore();
 
   const currentStepIndex = parseInt(stepId || '0');
   const step = buildSteps[currentStepIndex];
   const config = instructionConfigs[currentStepIndex] || instructionConfigs[2];
+
+  // Get the appropriate single brick asset based on selected color
+  const getSingleBrickAsset = () => {
+    switch (selectedBrickColor) {
+      case 'Wine':
+        return brickWine;
+      case 'Sunshine':
+        return brickSunshine;
+      case 'Rojo':
+        return brickRojo;
+      case 'Coal':
+        return brickCoal;
+      case 'Baddy Blue':
+      default:
+        return brickBaddyBlue;
+    }
+  };
+
+  // Get color palette for precise color matching
+  const getColorPalette = () => {
+    return selectedBrickColor ? brickColorPalettes[selectedBrickColor] : undefined;
+  };
 
   if (!step || step.type !== 'build') {
     return <div className="min-h-screen flex items-center justify-center">Step not found</div>;
@@ -79,25 +106,28 @@ function InstructionStep() {
   };
 
   const renderBrickComponent = (type: string) => {
+    const colorPalette = getColorPalette();
+    const singleBrickAsset = getSingleBrickAsset();
+
     switch (type) {
       case '1x2':
-        return <Brick1x2 />;
+        return <Brick1x2 colorPalette={colorPalette} />;
       case '2x1':
-        return <Brick2x1 />;
+        return <Brick2x1 colorPalette={colorPalette} />;
       case '2x2':
-        return <Brick2x2 />;
+        return <Brick2x2 colorPalette={colorPalette} />;
       case '3x1':
-        return <Brick3x1 />;
+        return <Brick3x1 colorPalette={colorPalette} />;
       case '4x1':
-        return <Brick4x1 />;
+        return <Brick4x1 colorPalette={colorPalette} />;
       case '4x2':
-        return <Brick4x2 />;
+        return <Brick4x2 colorPalette={colorPalette} />;
       case '6x1':
-        return <Brick6x1 />;
+        return <Brick6x1 colorPalette={colorPalette} />;
       case 'single':
-        return <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />;
+        return <img src={singleBrickAsset} alt="LEGO brick" className="block w-full h-full max-w-none" />;
       default:
-        return <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />;
+        return <img src={singleBrickAsset} alt="LEGO brick" className="block w-full h-full max-w-none" />;
     }
   };
 
