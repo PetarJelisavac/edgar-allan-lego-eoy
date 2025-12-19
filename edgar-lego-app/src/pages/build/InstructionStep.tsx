@@ -9,8 +9,13 @@ import audioIcon from '../../assets/images/audio-icon.svg';
 import arrowBack from '../../assets/images/arrow-back.svg';
 
 import brickSingle from '../../assets/images/brick-baddy-blue.svg';
+import Brick1x2 from '../../components/bricks/Brick1x2';
+import Brick2x1 from '../../components/bricks/Brick2x1';
+import Brick2x2 from '../../components/bricks/Brick2x2';
+import Brick3x1 from '../../components/bricks/Brick3x1';
 import Brick4x1 from '../../components/bricks/Brick4x1';
 import Brick4x2 from '../../components/bricks/Brick4x2';
+import Brick6x1 from '../../components/bricks/Brick6x1';
 
 function InstructionStep() {
   const { stepId } = useParams();
@@ -73,6 +78,29 @@ function InstructionStep() {
     `).join('\n');
   };
 
+  const renderBrickComponent = (type: string) => {
+    switch (type) {
+      case '1x2':
+        return <Brick1x2 />;
+      case '2x1':
+        return <Brick2x1 />;
+      case '2x2':
+        return <Brick2x2 />;
+      case '3x1':
+        return <Brick3x1 />;
+      case '4x1':
+        return <Brick4x1 />;
+      case '4x2':
+        return <Brick4x2 />;
+      case '6x1':
+        return <Brick6x1 />;
+      case 'single':
+        return <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />;
+      default:
+        return <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />;
+    }
+  };
+
   const renderStaticBrick = (brickConfig: typeof config.staticBricks[0], index: number) => {
     const containerStyle: React.CSSProperties = {
       position: 'absolute',
@@ -83,18 +111,11 @@ function InstructionStep() {
       zIndex: brickConfig.zIndex,
     };
 
-    if (brickConfig.type === '4x1') {
-      return <div key={`static-brick-${index}`} style={containerStyle}><Brick4x1 /></div>;
-    } else if (brickConfig.type === '4x2') {
-      return <div key={`static-brick-${index}`} style={containerStyle}><Brick4x2 /></div>;
-    } else if (brickConfig.type === 'single') {
-      return (
-        <div key={`static-brick-${index}`} style={containerStyle}>
-          <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div key={`static-brick-${index}`} style={containerStyle}>
+        {renderBrickComponent(brickConfig.type)}
+      </div>
+    );
   };
 
   return (
@@ -106,8 +127,8 @@ function InstructionStep() {
           <img src={buildingBackground} alt="Building background" className="block w-full h-full max-w-none object-cover rounded-lg" />
 
           {/* Step number badge - centered at top */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[10%] h-[60px] px-4 border border-black flex items-center justify-center bg-[#fefff8]/80">
-            <p className="font-epilogue font-semibold text-2xl text-black text-center">
+          <div className="absolute left-1/2 -translate-x-1/2 top-[10%] w-[60px] h-[60px] border border-black flex items-center justify-center">
+            <p className="font-epilogue font-semibold text-2xl text-black text-center leading-none">
               {config.stepNumber}
             </p>
           </div>
@@ -160,9 +181,7 @@ function InstructionStep() {
                       zIndex: brick.zIndex,
                     }}
                   >
-                    {brick.type === '4x1' ? <Brick4x1 /> : brick.type === '4x2' ? <Brick4x2 /> : 
-                      <img src={brickSingle} alt="LEGO brick" className="block w-full h-full max-w-none" />
-                    }
+                    {renderBrickComponent(brick.type)}
                   </div>
                 );
               })}
