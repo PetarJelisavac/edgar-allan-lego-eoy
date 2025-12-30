@@ -27,89 +27,338 @@ function OrderConfirmation() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center space-y-6">
-          <div className="text-8xl">🎉</div>
-          <h1 className="font-epilogue font-semibold text-4xl text-black">
+      <div style={{
+        minHeight: '100vh',
+        backgroundColor: '#fefff8',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 'clamp(16px, 2vw, 16px)'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '3.3125rem',
+          width: '100%',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div style={{ fontSize: '120px', textAlign: 'center' }}>🎉</div>
+          <h1 style={{
+            fontFamily: 'Epilogue, sans-serif',
+            fontWeight: 600,
+            fontSize: '36px',
+            color: 'black',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.1,
+            margin: 0,
+            textAlign: 'center'
+          }}>
             Order Submitted!
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p style={{
+            fontFamily: 'Petrona, serif',
+            fontSize: '18px',
+            color: '#1169fe',
+            margin: 0,
+            textAlign: 'center',
+            maxWidth: '600px'
+          }}>
             We'll send your LEGO Edgar set soon. Check your email for confirmation.
           </p>
-          <p className="text-gray-500">Redirecting to home...</p>
+          <p style={{
+            fontFamily: 'Petrona, serif',
+            fontSize: '16px',
+            color: '#000',
+            margin: 0,
+            textAlign: 'center'
+          }}>
+            Redirecting to home...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full space-y-8">
-        <div className="text-center">
-          <h1 className="font-epilogue font-semibold text-4xl text-black">
-            Review Your Order
-          </h1>
-          <p className="mt-4 text-gray-600">
-            Please confirm your information before submitting
-          </p>
-        </div>
-
-        <div className="bg-gray-50 rounded-2xl p-8 space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Name</h3>
-              <p className="text-lg font-medium">{userData.name}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Email</h3>
-              <p className="text-lg font-medium">{userData.email}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Company</h3>
-              <p className="text-lg font-medium">{userData.company}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-gray-500 mb-1">Position</h3>
-              <p className="text-lg font-medium capitalize">{userData.position}</p>
-            </div>
-            {userData.phone && (
-              <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-1">Phone</h3>
-                <p className="text-lg font-medium">{userData.phone}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-gray-200">
-            <h3 className="text-sm font-medium text-gray-500 mb-1">
-              Delivery Address
-            </h3>
-            <p className="text-lg font-medium whitespace-pre-line">
-              {userData.address}
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#fefff8',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: 'clamp(16px, 2vw, 16px)'
+    }}>
+      {/* Main Content Area - Full Width for Bigger Card */}
+      <div style={{
+        display: 'flex',
+        gap: '80px',
+        alignItems: 'center',
+        width: '100%',
+        flex: '1 1 0%',
+        minHeight: '0',
+        justifyContent: 'center'
+      }}>
+        {/* Form Card - Bigger to hold all information */}
+        <div style={{
+          border: '1px solid #c6c6c6',
+          borderRadius: 'clamp(20px, 2.5vw, 30px)',
+          padding: 'clamp(30px, 4vw, 60px)',
+          width: '100%',
+          maxWidth: '900px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'clamp(24px, 3vw, 40px)',
+          flex: '1 1 auto'
+        }}>
+          {/* Step Label and Question */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'clamp(12px, 1.5vw, 20px)',
+            width: '100%'
+          }}>
+            <p style={{
+              fontFamily: 'Petrona, serif',
+              fontWeight: 600,
+              fontStyle: 'italic',
+              fontSize: '16px',
+              color: '#272727',
+              margin: 0
+            }}>
+              Step 5 of 5
+            </p>
+            <h2 style={{
+              fontFamily: 'Epilogue, sans-serif',
+              fontWeight: 600,
+              fontSize: 'clamp(24px, 3vw, 32px)',
+              color: '#272727',
+              margin: 0
+            }}>
+              Review Your Order
+            </h2>
+            <p style={{
+              fontFamily: 'Epilogue, sans-serif',
+              fontSize: '16px',
+              color: '#666',
+              margin: 0
+            }}>
+              Please confirm your information before submitting
             </p>
           </div>
-        </div>
 
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={() => navigate('/order/step-3')}
-            disabled={isSubmitting}
-            className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-full
-                       font-petrona italic text-lg hover:bg-gray-50 transition-colors
-                       disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Edit
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="flex-1 bg-lego-blue text-white px-6 py-3 rounded-full
-                       font-petrona italic text-lg hover:bg-blue-600 transition-colors
-                       disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? 'Submitting...' : 'Submit Order'}
-          </button>
+          {/* Order Information */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'clamp(20px, 3vw, 32px)',
+            width: '100%'
+          }}>
+            {/* Personal Information */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: 'clamp(16px, 2vw, 24px)',
+              width: '100%'
+            }}>
+              <div>
+                <h3 style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '18px',
+                  color: '#000000',
+                  margin: '0 0 8px 0'
+                }}>
+                  Name
+                </h3>
+                <p style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: '#272727',
+                  margin: 0
+                }}>
+                  {userData.name || 'Not provided'}
+                </p>
+              </div>
+              <div>
+                <h3 style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '18px',
+                  color: '#000000',
+                  margin: '0 0 8px 0'
+                }}>
+                  Email
+                </h3>
+                <p style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: '#272727',
+                  margin: 0
+                }}>
+                  {userData.email || 'Not provided'}
+                </p>
+              </div>
+              <div>
+                <h3 style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '18px',
+                  color: '#000000',
+                  margin: '0 0 8px 0'
+                }}>
+                  Company
+                </h3>
+                <p style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: '#272727',
+                  margin: 0
+                }}>
+                  {userData.company || 'Not provided'}
+                </p>
+              </div>
+              <div>
+                <h3 style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '18px',
+                  color: '#000000',
+                  margin: '0 0 8px 0'
+                }}>
+                  Position
+                </h3>
+                <p style={{
+                  fontFamily: 'Epilogue, sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: '#272727',
+                  margin: 0
+                }}>
+                  {userData.position || 'Not provided'}
+                </p>
+              </div>
+              {userData.phone && (
+                <div>
+                  <h3 style={{
+                    fontFamily: 'Epilogue, sans-serif',
+                    fontWeight: 600,
+                    fontSize: '18px',
+                    color: '#000000',
+                    margin: '0 0 8px 0'
+                  }}>
+                    Phone
+                  </h3>
+                  <p style={{
+                    fontFamily: 'Epilogue, sans-serif',
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: '#272727',
+                    margin: 0
+                  }}>
+                    {userData.phone}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Delivery Address */}
+            <div style={{
+              borderTop: '1px solid #e5e5e5',
+              paddingTop: 'clamp(16px, 2vw, 24px)'
+            }}>
+              <h3 style={{
+                fontFamily: 'Epilogue, sans-serif',
+                fontWeight: 600,
+                fontSize: '18px',
+                color: '#000000',
+                margin: '0 0 8px 0'
+              }}>
+                Delivery Address
+              </h3>
+              <p style={{
+                fontFamily: 'Epilogue, sans-serif',
+                fontSize: '20px',
+                fontWeight: 500,
+                color: '#272727',
+                margin: 0,
+                whiteSpace: 'pre-line'
+              }}>
+                {userData.address || 'Not provided'}
+              </p>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: 'clamp(16px, 2vw, 24px)',
+            width: '100%'
+          }}>
+            <button
+              type="button"
+              onClick={() => navigate('/order/step-3')}
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: '#fefff8',
+                border: '1px solid #1169fe',
+                borderRadius: '9999px',
+                padding: '13.5px 30px',
+                height: 'clamp(44px, 5vw, 50px)',
+                minWidth: 'clamp(100px, 12vw, 150px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                opacity: isSubmitting ? 0.5 : 1,
+                transition: 'opacity 0.2s',
+                flex: 1
+              }}
+            >
+              <p style={{
+                fontFamily: 'Petrona, serif',
+                fontWeight: 500,
+                fontStyle: 'italic',
+                fontSize: 'clamp(16px, 1.8vw, 20px)',
+                color: '#1169fe',
+                margin: 0
+              }}>
+                Edit
+              </p>
+            </button>
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: '#1169fe',
+                border: 'none',
+                borderRadius: '9999px',
+                padding: '13.5px 30px',
+                height: 'clamp(44px, 5vw, 50px)',
+                minWidth: 'clamp(100px, 12vw, 150px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                opacity: isSubmitting ? 0.5 : 1,
+                transition: 'opacity 0.2s',
+                flex: 1
+              }}
+            >
+              <p style={{
+                fontFamily: 'Petrona, serif',
+                fontWeight: 500,
+                fontStyle: 'italic',
+                fontSize: 'clamp(16px, 1.8vw, 20px)',
+                color: '#fefff8',
+                margin: 0
+              }}>
+                {isSubmitting ? 'Submitting...' : 'Submit Order'}
+              </p>
+            </button>
+          </div>
         </div>
       </div>
     </div>
