@@ -71,7 +71,7 @@ interface BuildStore {
 
 export const useBuildStore = create<BuildStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       currentStep: 0,
       completedSteps: [],
       isMusicPlaying: false,

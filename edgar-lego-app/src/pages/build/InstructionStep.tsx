@@ -1,10 +1,10 @@
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useBuildStore } from '../../store/buildStore';
 import { buildSteps } from '../../data/buildSteps';
 import { instructionConfigs } from '../../data/instructionConfigs';
 
 import buildingBackground from '../../assets/images/Building.Background.png';
-import instructionPlaceholder from '../../assets/images/instruction-placeholder.svg';
 import audioIcon from '../../assets/images/audio-icon.svg';
 import arrowBack from '../../assets/images/arrow-back.svg';
 
@@ -20,6 +20,15 @@ import Brick3x1 from '../../components/bricks/Brick3x1';
 import Brick4x1 from '../../components/bricks/Brick4x1';
 import Brick4x2 from '../../components/bricks/Brick4x2';
 import Brick6x1 from '../../components/bricks/Brick6x1';
+import BrickVertical from '../../components/bricks/BrickVertical';
+import BrickTop from '../../components/bricks/BrickTop';
+import BrickTopLeftCurve from '../../components/bricks/BrickTopLeftCurve';
+import BrickTopCurveRight from '../../components/bricks/BrickTopCurveRight';
+import Brick1x2SidePip from '../../components/bricks/Brick1x2SidePip';
+import Brick3x1White from '../../components/bricks/Brick3x1White';
+import Brick3x1Flat from '../../components/bricks/Brick3x1Flat';
+import Brick8x2 from '../../components/bricks/Brick8x2';
+import InstructionPlaceholder from '../../components/bricks/InstructionPlaceholder';
 import { brickColorPalettes } from '../../store/buildStore';
 
 function InstructionStep() {
@@ -123,6 +132,22 @@ function InstructionStep() {
         return <Brick4x2 colorPalette={colorPalette} />;
       case '6x1':
         return <Brick6x1 colorPalette={colorPalette} />;
+      case 'vertical':
+        return <BrickVertical colorPalette={colorPalette} />;
+      case 'top':
+        return <BrickTop colorPalette={colorPalette} />;
+      case 'top-left-curve':
+        return <BrickTopLeftCurve colorPalette={colorPalette} />;
+      case 'top-curve-right':
+        return <BrickTopCurveRight colorPalette={colorPalette} />;
+      case '1x2-side-pip':
+        return <Brick1x2SidePip colorPalette={colorPalette} />;
+      case '3x1-white':
+        return <Brick3x1White colorPalette={colorPalette} />;
+      case '3x1-flat':
+        return <Brick3x1Flat colorPalette={colorPalette} />;
+      case '8x2':
+        return <Brick8x2 colorPalette={colorPalette} />;
       case 'single':
         return <img src={singleBrickAsset} alt="LEGO brick" className="block w-full h-full max-w-none" />;
       default:
@@ -184,7 +209,7 @@ function InstructionStep() {
                   height: `calc(${parseFloat(placeholder.height) / 712 * 100}%)`,
                 }}
               >
-                <img src={instructionPlaceholder} alt="" className="block w-full h-full max-w-none" />
+                <InstructionPlaceholder />
               </div>
             ))}
 
@@ -192,31 +217,29 @@ function InstructionStep() {
             {config.staticBricks?.map((staticBrick, index) => renderStaticBrick(staticBrick, index))}
 
             {/* Animated bricks for current step */}
-            {[...config.bricks]
-              .sort((a, b) => a.zIndex - b.zIndex)
-              .map((brick, index) => {
-                const animationName = `fallBrick${index + 1}`;
-                return (
-                  <div
-                    key={brick.id}
-                    className="absolute opacity-0"
-                    style={{
-                      left: `calc(${parseFloat(brick.left) / 930 * 100}%)`,
-                      top: `calc(${parseFloat(brick.finalTop) / 712 * 100}%)`,
-                      width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
-                      height: `calc(${parseFloat(brick.height) / 712 * 100}%)`,
-                      animationName: animationName,
-                      animationDuration: '1.2s',
-                      animationTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-                      animationFillMode: 'forwards',
-                      animationDelay: brick.animationDelay,
-                      zIndex: brick.zIndex,
-                    }}
-                  >
-                    {renderBrickComponent(brick.type)}
-                  </div>
-                );
-              })}
+            {config.bricks.map((brick, index) => {
+              const animationName = `fallBrick${index + 1}`;
+              return (
+                <div
+                  key={brick.id}
+                  className="absolute opacity-0"
+                  style={{
+                    left: `calc(${parseFloat(brick.left) / 930 * 100}%)`,
+                    top: `calc(${parseFloat(brick.finalTop) / 713 * 100}%)`,
+                    width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
+                    height: `calc(${parseFloat(brick.height) / 713 * 100}%)`,
+                    animationName: animationName,
+                    animationDuration: '1.2s',
+                    animationTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    animationFillMode: 'forwards',
+                    animationDelay: brick.animationDelay,
+                    zIndex: brick.zIndex,
+                  }}
+                >
+                  {renderBrickComponent(brick.type)}
+                </div>
+              );
+            })}
           </div>
         </div>
 

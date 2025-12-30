@@ -37,8 +37,8 @@ export interface InstructionConfig {
 }
 
 export const instructionConfigs: Record<number, InstructionConfig> = {
-  // Step 1 (index 2) - Two 4x1 bricks
-  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=59-14550
+  // Step 1 (index 2) - Two 4x1 bricks (foundation)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=192-17434
   2: {
     stepNumber: 1,
     staticBricks: [], // First step, no previous bricks
@@ -47,11 +47,11 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'brick-1',
         type: '4x1',
-        left: '341px',
+        left: '340px',
         top: '-100px',
-        finalTop: '503px', // Lands on top of placeholder
+        finalTop: '478px', // Lands on top of placeholder
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         animationDelay: '0s',
         zIndex: 2,
       },
@@ -59,92 +59,92 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'brick-2',
         type: '4x1',
-        left: '434.5px',
+        left: '434px',
         top: '-100px',
-        finalTop: '553px', // Lands on top of placeholder
+        finalTop: '528px', // Lands on top of placeholder
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         animationDelay: '0.3s',
         zIndex: 1,
       },
     ],
     placeholders: [
       {
-        left: '341px',
-        top: '503px',
+        left: '340px',
+        top: '478px',
         width: '118px',
         height: '78.5px',
       },
       {
-        left: '434.5px',
-        top: '553px',
-        width: '118px',
-        height: '78.5px',
+        left: '434px',
+        top: '528px',
+        width: '120px',
+        height: '78.454px',
         animationDelay: '0.3s',
       },
     ],
   },
-  // Step 2 (index 3) - Two 4x2 bricks
-  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=70-13175
+  // Step 2 (index 3) - Two 4x2 bricks on top of 4x1 foundation
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=192-17434
   3: {
     stepNumber: 2,
     staticBricks: [
-      // Bricks from step 1 - exactly where they ended in Step 1
+      // Bricks from step 1 - the 4x1 foundation bricks
       {
         type: '4x1',
-        left: '341px',
-        top: '503px', // From Step 1 finalTop
+        left: '340px',
+        top: '478px', // From Step 1 finalTop
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         zIndex: 1,
       },
       {
         type: '4x1',
-        left: '434.5px',
-        top: '553px', // From Step 1 finalTop
+        left: '434px',
+        top: '528px', // From Step 1 finalTop
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         zIndex: 1,
       },
     ],
     bricks: [
-      // Left 4x2 brick - drops from above
+      // Left 4x2 brick - drops from above, on top of left 4x1
       {
         id: 'brick-1',
         type: '4x2',
-        left: '341px',
+        left: '340px',
         top: '-100px',
-        finalTop: '480px', // Lands on top of placeholder
+        finalTop: '436px', // Lands on top of 4x1
         width: '120px',
         height: '113px',
         animationDelay: '0s',
-        zIndex: 3,
+        zIndex: 2,
       },
-      // Right 4x2 brick - drops from above
+      // Right 4x2 brick - drops from above, on top of right 4x1 (front brick)
       {
         id: 'brick-2',
         type: '4x2',
-        left: '434.5px',
+        left: '434px',
         top: '-100px',
-        finalTop: '530px', // Lands on top of placeholder
+        finalTop: '486px', // Lands on top of 4x1
         width: '120px',
         height: '113px',
         animationDelay: '0.3s',
-        zIndex: 2,
+        zIndex: 3,
       },
     ],
     placeholders: [
       {
-        left: '341px',
-        top: '480px',
-        width: '118px',
-        height: '78.5px',
+        left: '340px',
+        top: '436px',
+        width: '120px',
+        height: '113px',
       },
       {
-        left: '434.5px',
-        top: '530px',
-        width: '118px',
-        height: '78.5px',
+        left: '434px',
+        top: '486px',
+        width: '120px',
+        height: '113px',
         animationDelay: '0.3s',
       },
     ],
@@ -154,39 +154,39 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
   4: {
     stepNumber: 3,
     staticBricks: [
-      // Bricks from step 1 (4x1 bricks at the bottom)
+      // Bricks from step 1 (4x1 foundation)
       {
         type: '4x1',
-        left: '341px',
-        top: '480px', // Matches Step 1 finalTop
+        left: '340px',
+        top: '478px', // From Step 1 finalTop
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         zIndex: 1,
       },
       {
         type: '4x1',
-        left: '434.5px', // Matches Step 1 left
-        top: '530px',
+        left: '434px',
+        top: '528px', // From Step 1 finalTop
         width: '120px',
-        height: '80.5px',
+        height: '78.454px',
         zIndex: 1,
       },
-      // Bricks from step 2 (4x2 bricks in the middle-top)
+      // Bricks from step 2 (4x2 bricks on top)
       {
         type: '4x2',
-        left: '341px',
-        top: '237px',
-        width: '120px',
-        height: '113px',
-        zIndex: 3,
-      },
-      {
-        type: '4x2',
-        left: '434.5px',
-        top: '300px',
+        left: '340px',
+        top: '436px', // From Step 2 finalTop
         width: '120px',
         height: '113px',
         zIndex: 2,
+      },
+      {
+        type: '4x2',
+        left: '434px',
+        top: '486px', // From Step 2 finalTop
+        width: '120px',
+        height: '113px',
+        zIndex: 3,
       },
     ],
     bricks: [
@@ -237,10 +237,10 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     stepNumber: 4,
     staticBricks: [
       // All bricks from steps 1-3
-      { type: '4x1', left: '341px', top: '480px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x1', left: '434.5px', top: '530px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x2', left: '341px', top: '237px', width: '120px', height: '113px', zIndex: 3 },
-      { type: '4x2', left: '434.5px', top: '300px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
       { type: '2x2', left: '341px', top: '390px', width: '90px', height: '97px', zIndex: 4 },
       { type: '2x2', left: '465px', top: '427px', width: '90px', height: '97px', zIndex: 3 },
     ],
@@ -273,10 +273,10 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     stepNumber: 5,
     staticBricks: [
       // All bricks from steps 1-4
-      { type: '4x1', left: '341px', top: '480px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x1', left: '434.5px', top: '530px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x2', left: '341px', top: '237px', width: '120px', height: '113px', zIndex: 3 },
-      { type: '4x2', left: '434.5px', top: '300px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
       { type: '2x2', left: '341px', top: '390px', width: '90px', height: '97px', zIndex: 4 },
       { type: '2x2', left: '465px', top: '427px', width: '90px', height: '97px', zIndex: 3 },
       { type: '8x2', left: '341px', top: '172px', width: '180px', height: '142px', zIndex: 5 },
@@ -367,10 +367,10 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     stepNumber: 6,
     staticBricks: [
       // All bricks from steps 1-5
-      { type: '4x1', left: '341px', top: '480px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x1', left: '434.5px', top: '530px', width: '120px', height: '80.5px', zIndex: 1 },
-      { type: '4x2', left: '341px', top: '237px', width: '120px', height: '113px', zIndex: 3 },
-      { type: '4x2', left: '434.5px', top: '300px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
       { type: '2x2', left: '341px', top: '390px', width: '90px', height: '97px', zIndex: 4 },
       { type: '2x2', left: '465px', top: '427px', width: '90px', height: '97px', zIndex: 3 },
       { type: '8x2', left: '341px', top: '172px', width: '180px', height: '142px', zIndex: 5 },

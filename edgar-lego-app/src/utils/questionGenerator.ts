@@ -18,23 +18,29 @@ const questionBank: Record<string, Record<string, Question[]>> = {
         type: 'multiple-choice',
       },
       {
-        question: 'How do you measure tech ROI in your organization?',
-        type: 'text',
+        question: 'How do you measure success in tech initiatives?',
+        options: [
+          'ROI metrics',
+          'User adoption',
+          'Performance improvements',
+          'Innovation outcomes',
+        ],
+        type: 'multiple-choice',
       },
     ],
     developer: [
       {
-        question: 'What is your favorite programming paradigm?',
+        question: 'What development practices do you value most?',
         options: [
-          'Object-Oriented',
-          'Functional',
-          'Procedural',
-          'Reactive',
+          'Clean code principles',
+          'Agile methodologies',
+          'Code reviews',
+          'Automated testing',
         ],
         type: 'multiple-choice',
       },
       {
-        question: 'Describe your ideal development workflow.',
+        question: 'Describe your approach to problem-solving.',
         type: 'text',
       },
     ],
@@ -74,8 +80,12 @@ const questionBank: Record<string, Record<string, Question[]>> = {
   finance: {
     executive: [
       {
-        question: 'What fintech trend excites you most?',
+        question: 'What financial metrics drive your decisions?',
         options: [
+          'Revenue growth',
+          'Cost optimization',
+          'Risk management',
+          'Shareholder value',
           'Blockchain',
           'AI in trading',
           'Mobile banking',
@@ -85,22 +95,24 @@ const questionBank: Record<string, Record<string, Question[]>> = {
       },
     ],
   },
-  default: [
-    {
-      question: 'What inspires you most about building things?',
-      options: [
-        'Creative expression',
-        'Problem solving',
-        'Collaboration',
-        'End results',
-      ],
-      type: 'multiple-choice',
-    },
-    {
-      question: 'Share a moment when teamwork made a difference.',
-      type: 'text',
-    },
-  ],
+  default: {
+    general: [
+      {
+        question: 'What inspires you most about building things?',
+        options: [
+          'Creative expression',
+          'Problem solving',
+          'Collaboration',
+          'End results',
+        ],
+        type: 'multiple-choice',
+      },
+      {
+        question: 'Share a moment when teamwork made a difference.',
+        type: 'text',
+      },
+    ],
+  },
 };
 
 export function getQuestionForUser(
@@ -123,8 +135,6 @@ export function getQuestionForUser(
   }
 
   // Fallback to default questions
-  const defaultQuestions = questionBank.default;
-  return (
-    defaultQuestions[stepNumber % defaultQuestions.length] || defaultQuestions[0]
-  );
+  const defaultQuestions = questionBank.default.general;
+  return defaultQuestions[stepNumber % defaultQuestions.length] || defaultQuestions[0];
 }

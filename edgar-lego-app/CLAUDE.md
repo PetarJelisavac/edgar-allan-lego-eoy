@@ -114,6 +114,49 @@ interface BuildStep {
 
 The `instructionConfigs.ts` file contains detailed brick positioning, animations, and rendering configurations for each instruction step.
 
+#### **CRITICAL: Cumulative Stacking Pattern**
+
+When implementing build instruction steps, follow this pattern carefully:
+
+**Figma Design Shows Cumulative State:**
+- Figma designs show ALL bricks from previous steps + new bricks for current step
+- This is the FINAL appearance, not just the new bricks
+
+**Configuration Pattern:**
+```typescript
+{
+  stepNumber: 2,
+  staticBricks: [
+    // ALL bricks from previous steps
+    // Use exact positions where they landed (finalTop values)
+    { type: '4x1', left: '340px', top: '478px', ... }, // From step 1
+    { type: '4x1', left: '434px', top: '528px', ... }, // From step 1
+  ],
+  bricks: [
+    // ONLY new bricks for THIS step (will animate in)
+    { id: 'brick-1', type: '4x2', left: '340px', finalTop: '436px', ... },
+    { id: 'brick-2', type: '4x2', left: '434px', finalTop: '486px', ... },
+  ],
+  placeholders: [
+    // Where NEW bricks will land
+    { left: '340px', top: '436px', ... },
+    { left: '434px', top: '486px', ... },
+  ],
+}
+```
+
+**Example (Step 2 - instruction/3):**
+- Static: Two 4x1 bricks from step 1 (foundation)
+- New/Animated: Two 4x2 bricks on top
+- Result: Foundation + layer stacked correctly
+
+**Key Rules:**
+1. `staticBricks[]` = ALL bricks from previous steps at their final positions
+2. `bricks[]` = ONLY new bricks for current step (with animations)
+3. `placeholders[]` = Where new bricks will land
+4. Positions must match EXACTLY for proper stacking across all ~19 steps
+5. Each step builds progressively on top of previous steps
+
 ### Form Validation
 
 Uses React Hook Form + Zod for type-safe form validation. Forms are located in `src/pages/order/OrderStep*.tsx` and follow this pattern:
