@@ -2,14 +2,16 @@
 
 export interface BrickConfig {
   id: string;
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top';
   left: string;
   top: string;
   finalTop: string; // Where brick lands after animation
+  finalLeft?: string; // Optional: for gap-closing animation
   width: string;
   height: string;
   animationDelay: string;
   zIndex: number;
+  fadeRight?: boolean; // Optional: for fading out the right side
 }
 
 export interface PlaceholderConfig {
@@ -21,12 +23,13 @@ export interface PlaceholderConfig {
 }
 
 export interface StaticBrickConfig {
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top';
   left: string;
   top: string;
   width: string;
   height: string;
   zIndex: number;
+  fadeRight?: boolean; // Optional: for fading out the right side
 }
 
 export interface InstructionConfig {
@@ -598,9 +601,9 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'brick-1',
         type: '2x1',
-        left: '431px',
+        left: '342px',
         top: '-100px',
-        finalTop: '291px',
+        finalTop: '290px',
         width: '90px',
         height: '61px',
         animationDelay: '0s',
@@ -610,9 +613,9 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'brick-2',
         type: '2x1',
-        left: '556px',
+        left: '466px',
         top: '-100px',
-        finalTop: '358px',
+        finalTop: '357px',
         width: '90px',
         height: '61px',
         animationDelay: '0.3s',
@@ -621,17 +624,456 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     ],
     placeholders: [
       {
-        left: '431px',
-        top: '291px',
+        left: '342px',
+        top: '290px',
         width: '90px',
         height: '61px',
       },
       {
-        left: '556px',
-        top: '358px',
+        left: '466px',
+        top: '357px',
         width: '90px',
         height: '61px',
       },
     ],
+  },
+  // Step 10 (index 11) - Two 1x2 bricks on top
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=193-19067
+  11: {
+    stepNumber: 10,
+    staticBricks: [
+      // All bricks from steps 1-10 (exactly matching step 10 plus its new bricks)
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+      { type: '3x1', left: '372px', top: '363px', width: '120px', height: '96px', zIndex: 12 },
+      { type: '3x1-white', left: '374px', top: '348px', width: '120px', height: '96px', zIndex: 13 },
+      { type: '3x1-flat', left: '375px', top: '333px', width: '120px', height: '96px', zIndex: 14 },
+      { type: '2x2', left: '341px', top: '305px', width: '90px', height: '97px', zIndex: 11 },
+      { type: '2x2', left: '466px', top: '372px', width: '90px', height: '97px', zIndex: 16 },
+      { type: '2x1', left: '342px', top: '290px', width: '90px', height: '61px', zIndex: 17 },
+      { type: '2x1', left: '466px', top: '357px', width: '90px', height: '61px', zIndex: 18 },
+    ],
+    bricks: [
+      // New 1x2 brick - drops from above on left
+      {
+        id: 'brick-1',
+        type: '1x2',
+        left: '371px',
+        top: '-100px',
+        finalTop: '247px',
+        width: '60px',
+        height: '81px',
+        animationDelay: '0s',
+        zIndex: 19,
+      },
+      // New 1x2 brick - drops from above on right
+      {
+        id: 'brick-2',
+        type: '1x2',
+        left: '496px',
+        top: '-100px',
+        finalTop: '314px',
+        width: '60px',
+        height: '81px',
+        animationDelay: '0.3s',
+        zIndex: 32,
+      },
+    ],
+    placeholders: [
+      {
+        left: '371px',
+        top: '247px',
+        width: '60px',
+        height: '81px',
+      },
+      {
+        left: '496px',
+        top: '314px',
+        width: '60px',
+        height: '81px',
+      },
+    ],
+  },
+  // Step 11 (index 12) - Four bricks with gap-closing animation (1x2 Side Pip + 3 vertical bricks)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=193-19394
+  12: {
+    stepNumber: 11,
+    staticBricks: [
+      // All bricks from steps 1-11
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+      { type: '3x1', left: '372px', top: '363px', width: '120px', height: '96px', zIndex: 12 },
+      { type: '3x1-white', left: '374px', top: '348px', width: '120px', height: '96px', zIndex: 13 },
+      { type: '3x1-flat', left: '375px', top: '333px', width: '120px', height: '96px', zIndex: 14 },
+      { type: '2x2', left: '341px', top: '305px', width: '90px', height: '97px', zIndex: 11 },
+      { type: '2x2', left: '466px', top: '372px', width: '90px', height: '97px', zIndex: 16 },
+      { type: '2x1', left: '342px', top: '290px', width: '90px', height: '61px', zIndex: 17 },
+      { type: '2x1', left: '466px', top: '357px', width: '90px', height: '61px', zIndex: 18 },
+      { type: '1x2', left: '371px', top: '247px', width: '60px', height: '81px', zIndex: 19 },
+      { type: '1x2', left: '496px', top: '314px', width: '60px', height: '81px', zIndex: 20 },
+    ],
+    bricks: [
+      // New bricks with gap-closing animation - they compress together
+      // 1x2 Side Pip - stays in place (leftmost)
+      {
+        id: 'brick-1',
+        type: '1x2-side-pip',
+        left: '341px', // Final position - no movement needed
+        finalLeft: '341px', // Stays in place
+        top: '-100px',
+        finalTop: '263px',
+        width: '60px',
+        height: '81px',
+        animationDelay: '0s',
+        zIndex: 21,
+      },
+      // Vertical White brick 1 - starts 40px to the right, moves left
+      {
+        id: 'brick-2',
+        type: 'vertical-white',
+        left: '412px', // Start position (40px gap from brick 1)
+        finalLeft: '372px', // Moves LEFT to close gap
+        top: '-100px',
+        finalTop: '270px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0.3s',
+        zIndex: 22,
+      },
+      // Vertical White brick 2 - starts 54px to the right, moves left
+      {
+        id: 'brick-3',
+        type: 'vertical-white',
+        left: '440px', // Start position (more gap)
+        finalLeft: '386px', // Moves LEFT to close gap
+        top: '-100px',
+        finalTop: '278px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0.6s',
+        zIndex: 23,
+      },
+      // Vertical Blue brick - starts 68px to the right, moves left most
+      {
+        id: 'brick-4',
+        type: 'vertical-blue',
+        left: '467px', // Start position (biggest gap)
+        finalLeft: '399px', // Moves LEFT most to close gap
+        top: '-100px',
+        finalTop: '285px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0.9s',
+        zIndex: 24,
+      },
+    ],
+    placeholders: [],
+  },
+  // Step 12 (index 13) - Four bricks with gap-closing animation on right side (Vertical Blue + 2 Vertical White + 1x2)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=193-19767
+  13: {
+    stepNumber: 12,
+    staticBricks: [
+      // All bricks from steps 1-12
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+      { type: '3x1', left: '372px', top: '363px', width: '120px', height: '96px', zIndex: 12 },
+      { type: '3x1-white', left: '374px', top: '348px', width: '120px', height: '96px', zIndex: 13 },
+      { type: '3x1-flat', left: '375px', top: '333px', width: '120px', height: '96px', zIndex: 14 },
+      { type: '2x2', left: '341px', top: '305px', width: '90px', height: '97px', zIndex: 11 },
+      { type: '2x2', left: '466px', top: '372px', width: '90px', height: '97px', zIndex: 33 },
+      { type: '2x1', left: '342px', top: '290px', width: '90px', height: '61px', zIndex: 17 },
+      { type: '2x1', left: '466px', top: '357px', width: '90px', height: '61px', zIndex: 34 },
+      { type: '1x2', left: '371px', top: '247px', width: '60px', height: '81px', zIndex: 19 },
+      { type: '1x2', left: '496px', top: '314px', width: '60px', height: '81px', zIndex: 35 },
+      // Step 12 bricks now static (in their final positions after compression)
+      { type: '1x2-side-pip', left: '341px', top: '263px', width: '60px', height: '81px', zIndex: 21 },
+      { type: 'vertical-white', left: '372px', top: '270px', width: '46px', height: '100px', zIndex: 22 },
+      { type: 'vertical-white', left: '386px', top: '278px', width: '46px', height: '100px', zIndex: 23 },
+      { type: 'vertical-blue', left: '399px', top: '285px', width: '46px', height: '100px', zIndex: 24 },
+    ],
+    bricks: [
+      // New bricks with gap-closing animation - they compress together from left to right
+      // Vertical Blue - starts 68px to the left, moves right most
+      {
+        id: 'brick-1',
+        type: 'vertical-blue',
+        left: '358px', // Start position (68px left of final)
+        finalLeft: '426px', // Moves RIGHT to close gap
+        top: '-100px',
+        finalTop: '303px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0s',
+        zIndex: 31,
+      },
+      // Vertical White brick 1 - starts 54px to the left, moves right
+      {
+        id: 'brick-2',
+        type: 'vertical-white',
+        left: '386px', // Start position (54px left of final)
+        finalLeft: '440px', // Moves RIGHT to close gap
+        top: '-100px',
+        finalTop: '310px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0.3s',
+        zIndex: 31,
+      },
+      // Vertical White brick 2 - starts 40px to the left, moves right
+      {
+        id: 'brick-3',
+        type: 'vertical-white',
+        left: '412px', // Start position (40px left of final)
+        finalLeft: '452px', // Moves RIGHT to close gap
+        top: '-100px',
+        finalTop: '317px',
+        width: '46px',
+        height: '100px',
+        animationDelay: '0.6s',
+        zIndex: 31,
+      },
+      // 1x2 brick - stays in place (rightmost anchor)
+      {
+        id: 'brick-4',
+        type: '1x2',
+        left: '466px', // Final position - no movement needed
+        finalLeft: '466px', // Stays in place
+        top: '-100px',
+        finalTop: '330px',
+        width: '60px',
+        height: '81px',
+        animationDelay: '0.9s',
+        zIndex: 36,
+      },
+    ],
+    placeholders: [],
+  },
+  // Step 13 (index 14) - Two 6x1 bricks and four curved top pieces (2x TopCurveRight + 2x TopLeftCurve)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=194-20187
+  14: {
+    stepNumber: 13,
+    staticBricks: [
+      // All bricks from steps 1-13
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+      { type: '3x1', left: '372px', top: '363px', width: '120px', height: '96px', zIndex: 12 },
+      { type: '3x1-white', left: '374px', top: '348px', width: '120px', height: '96px', zIndex: 13 },
+      { type: '3x1-flat', left: '375px', top: '333px', width: '120px', height: '96px', zIndex: 14 },
+      { type: '2x2', left: '341px', top: '305px', width: '90px', height: '97px', zIndex: 11 },
+      { type: '2x2', left: '466px', top: '372px', width: '90px', height: '97px', zIndex: 33 },
+      { type: '2x1', left: '342px', top: '290px', width: '90px', height: '61px', zIndex: 17 },
+      { type: '2x1', left: '466px', top: '357px', width: '90px', height: '61px', zIndex: 34 },
+      { type: '1x2', left: '371px', top: '247px', width: '60px', height: '81px', zIndex: 19 },
+      { type: '1x2', left: '496px', top: '314px', width: '60px', height: '81px', zIndex: 35 },
+      // Step 12 bricks now static (in their final positions after compression)
+      { type: '1x2-side-pip', left: '341px', top: '263px', width: '60px', height: '81px', zIndex: 21 },
+      { type: 'vertical-white', left: '372px', top: '270px', width: '46px', height: '100px', zIndex: 22 },
+      { type: 'vertical-white', left: '386px', top: '278px', width: '46px', height: '100px', zIndex: 23 },
+      { type: 'vertical-blue', left: '399px', top: '285px', width: '46px', height: '100px', zIndex: 24 },
+      // Step 13 bricks now static (in their final positions after compression)
+      { type: 'vertical-blue', left: '426px', top: '303px', width: '46px', height: '100px', zIndex: 31 },
+      { type: 'vertical-white', left: '440px', top: '310px', width: '46px', height: '100px', zIndex: 31 },
+      { type: 'vertical-white', left: '452px', top: '317px', width: '46px', height: '100px', zIndex: 31 },
+      { type: '1x2', left: '466px', top: '330px', width: '60px', height: '81px', zIndex: 36 },
+    ],
+    bricks: [
+      // Two 6x1 bricks - drops from above
+      {
+        id: 'brick-1',
+        type: '6x1',
+        left: '374px',
+        finalLeft: '374px',
+        top: '-100px',
+        finalTop: '254px',
+        width: '150px',
+        height: '95px',
+        animationDelay: '0s',
+        zIndex: 37,
+      },
+      {
+        id: 'brick-2',
+        type: '6x1',
+        left: '375px',
+        finalLeft: '375px',
+        top: '-100px',
+        finalTop: '239px',
+        width: '150px',
+        height: '95px',
+        animationDelay: '0.3s',
+        zIndex: 38,
+      },
+      // Two TopCurveRight pieces - drops from above
+      {
+        id: 'brick-3',
+        type: 'top-curve-right',
+        left: '467px',
+        finalLeft: '467px',
+        top: '-100px',
+        finalTop: '254px',
+        width: '90px',
+        height: '93px',
+        animationDelay: '0.6s',
+        zIndex: 43,
+      },
+      {
+        id: 'brick-4',
+        type: 'top-curve-right',
+        left: '436px',
+        finalLeft: '436px',
+        top: '-100px',
+        finalTop: '270px',
+        width: '90px',
+        height: '93px',
+        animationDelay: '0.9s',
+        zIndex: 44,
+      },
+      // Two TopLeftCurve pieces - drops from above
+      {
+        id: 'brick-5',
+        type: 'top-left-curve',
+        left: '372px',
+        finalLeft: '372px',
+        top: '-100px',
+        finalTop: '203px',
+        width: '95px',
+        height: '78px',
+        animationDelay: '1.2s',
+        zIndex: 41,
+      },
+      {
+        id: 'brick-6',
+        type: 'top-left-curve',
+        left: '343px',
+        finalLeft: '343px',
+        top: '-100px',
+        finalTop: '219px',
+        width: '95px',
+        height: '78px',
+        animationDelay: '1.5s',
+        zIndex: 42,
+      },
+    ],
+    placeholders: [],
+  },
+  // Step 14 (index 15) - 2x1 brick and large top piece to complete the build
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=194-20699
+  15: {
+    stepNumber: 14,
+    staticBricks: [
+      // All bricks from steps 1-14
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+      { type: '3x1', left: '372px', top: '363px', width: '120px', height: '96px', zIndex: 12 },
+      { type: '3x1-white', left: '374px', top: '348px', width: '120px', height: '96px', zIndex: 13 },
+      { type: '3x1-flat', left: '375px', top: '333px', width: '120px', height: '96px', zIndex: 14 },
+      { type: '2x2', left: '341px', top: '305px', width: '90px', height: '97px', zIndex: 11 },
+      { type: '2x2', left: '466px', top: '372px', width: '90px', height: '97px', zIndex: 33 },
+      { type: '2x1', left: '342px', top: '290px', width: '90px', height: '61px', zIndex: 17 },
+      { type: '2x1', left: '466px', top: '357px', width: '90px', height: '61px', zIndex: 34 },
+      { type: '1x2', left: '371px', top: '247px', width: '60px', height: '81px', zIndex: 19 },
+      { type: '1x2', left: '496px', top: '314px', width: '60px', height: '81px', zIndex: 35 },
+      // Step 12 bricks now static
+      { type: '1x2-side-pip', left: '341px', top: '263px', width: '60px', height: '81px', zIndex: 21 },
+      { type: 'vertical-white', left: '372px', top: '270px', width: '46px', height: '100px', zIndex: 22 },
+      { type: 'vertical-white', left: '386px', top: '278px', width: '46px', height: '100px', zIndex: 23 },
+      { type: 'vertical-blue', left: '399px', top: '285px', width: '46px', height: '100px', zIndex: 24 },
+      // Step 13 bricks now static
+      { type: 'vertical-blue', left: '426px', top: '303px', width: '46px', height: '100px', zIndex: 31 },
+      { type: 'vertical-white', left: '440px', top: '310px', width: '46px', height: '100px', zIndex: 31 },
+      { type: 'vertical-white', left: '452px', top: '317px', width: '46px', height: '100px', zIndex: 31 },
+      { type: '1x2', left: '466px', top: '330px', width: '60px', height: '81px', zIndex: 36 },
+      // Step 14 bricks now static
+      { type: '6x1', left: '374px', top: '254px', width: '150px', height: '95px', zIndex: 37 },
+      { type: '6x1', left: '375px', top: '239px', width: '150px', height: '95px', zIndex: 38 },
+      { type: 'top-curve-right', left: '467px', top: '254px', width: '90px', height: '93px', zIndex: 44 },
+      { type: 'top-curve-right', left: '436px', top: '270px', width: '90px', height: '93px', zIndex: 44 },
+      { type: 'top-left-curve', left: '372px', top: '203px', width: '95px', height: '78px', zIndex: 41 },
+      { type: 'top-left-curve', left: '343px', top: '219px', width: '95px', height: '78px', zIndex: 42 },
+    ],
+    bricks: [
+      // 2x1 brick above the 6x1 bricks
+      {
+        id: 'brick-1',
+        type: '2x1',
+        left: '402px',
+        finalLeft: '402px',
+        top: '-100px',
+        finalTop: '237px',
+        width: '90px',
+        height: '61px',
+        animationDelay: '0s',
+        zIndex: 43,
+      },
+      // Large top piece
+      {
+        id: 'brick-2',
+        type: 'top',
+        left: '370px',
+        finalLeft: '370px',
+        top: '-100px',
+        finalTop: '162px',
+        width: '164px',
+        height: '95px',
+        animationDelay: '0.5s',
+        zIndex: 44,
+      },
+    ],
+    placeholders: [],
   },
 };

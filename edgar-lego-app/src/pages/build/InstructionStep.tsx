@@ -111,13 +111,36 @@ function InstructionStep() {
   };
 
   const generateKeyframes = () => {
-    return config.bricks.map((_, index) => `
-      @keyframes fallBrick${index + 1} {
-        0% { opacity: 0; transform: translateY(-300px); }
-        30% { opacity: 1; transform: translateY(-300x); }
-        100% { opacity: 1; transform: translateY(0); }
+    return config.bricks.map((brick, index) => {
+      // Check if this brick has a gap-closing animation (finalLeft property)
+      if (brick.finalLeft) {
+        const startLeft = parseFloat(brick.left);
+        const finalLeft = parseFloat(brick.finalLeft);
+        const horizontalShift = finalLeft - startLeft;
+
+        // Calculate intermediate stop position (60% down from -300px to final)
+        const intermediateY = -300 * 0.4; // Stop at 60% of the way down
+
+        return `
+          @keyframes fallBrick${index + 1} {
+            0% { opacity: 0; transform: translate(0, -300px); }
+            15% { opacity: 1; transform: translate(0, ${intermediateY}px); }
+            30% { opacity: 1; transform: translate(0, ${intermediateY}px); }
+            50% { opacity: 1; transform: translate(${horizontalShift}px, ${intermediateY}px); }
+            100% { opacity: 1; transform: translate(${horizontalShift}px, 0); }
+          }
+        `;
+      } else {
+        // Regular fall animation
+        return `
+          @keyframes fallBrick${index + 1} {
+            0% { opacity: 0; transform: translateY(-300px); }
+            30% { opacity: 1; transform: translateY(-300px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `;
       }
-    `).join('\n');
+    }).join('\n');
   };
 
   const renderBrickComponent = (type: string) => {
@@ -147,14 +170,18 @@ function InstructionStep() {
         return <BrickTopLeftCurve colorPalette={colorPalette} />;
       case 'top-curve-right':
         return <BrickTopCurveRight colorPalette={colorPalette} />;
-      case '1x2-side-pip':
-        return <Brick1x2SidePip colorPalette={colorPalette} />;
       case '3x1-white':
         return <Brick3x1White />;
       case '3x1-flat':
         return <Brick3x1Flat />;
       case '8x2':
         return <Brick8x2 colorPalette={colorPalette} />;
+      case '1x2-side-pip':
+        return <Brick1x2SidePip colorPalette={colorPalette} />;
+      case 'vertical-white':
+        return <BrickVertical colorPalette={{ name: 'Baddy Blue', primary: '#FFFFFF', secondary: '#D9D9D9', tertiary: '#E5E5E5', highlight: '#FFFFFF' }} />;
+      case 'vertical-blue':
+        return <BrickVertical colorPalette={colorPalette} />;
       case 'single':
         return <img src={singleBrickAsset} alt="LEGO brick" className="block w-full h-full max-w-none" />;
       default:
@@ -226,22 +253,30 @@ function InstructionStep() {
             {/* Animated bricks for current step */}
             {config.bricks.map((brick, index) => {
               const animationName = `fallBrick${index + 1}`;
+              const brickStyle: React.CSSProperties = {
+                left: `calc(${parseFloat(brick.left) / 930 * 100}%)`,
+                top: `calc(${parseFloat(brick.finalTop) / 712 * 100}%)`,
+                width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
+                height: `calc(${parseFloat(brick.height) / 712 * 100}%)`,
+                animationName: animationName,
+                animationDuration: '2s',
+                animationTimingFunction: 'ease-in-out',
+                animationFillMode: 'forwards',
+                animationDelay: brick.animationDelay,
+                zIndex: brick.zIndex,
+              };
+
+              // Add fade effect on the right side if specified
+              if (brick.fadeRight) {
+                brickStyle.maskImage = 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)';
+                brickStyle.WebkitMaskImage = 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)';
+              }
+
               return (
                 <div
                   key={brick.id}
                   className="absolute opacity-0"
-                  style={{
-                    left: `calc(${parseFloat(brick.left) / 930 * 100}%)`,
-                    top: `calc(${parseFloat(brick.finalTop) / 712 * 100}%)`,
-                    width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
-                    height: `calc(${parseFloat(brick.height) / 712 * 100}%)`,
-                    animationName: animationName,
-                    animationDuration: '2s',
-                    animationTimingFunction: 'ease-in-out',
-                    animationFillMode: 'forwards',
-                    animationDelay: brick.animationDelay,
-                    zIndex: brick.zIndex,
-                  }}
+                  style={brickStyle}
                 >
                   {renderBrickComponent(brick.type)}
                 </div>

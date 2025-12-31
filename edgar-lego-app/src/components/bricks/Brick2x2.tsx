@@ -13,7 +13,7 @@ function Brick2x2({ style, colorPalette }: Brick2x2Props) {
   const highlight = colorPalette?.highlight || '#169AFF';
 
   return (
-    <svg width="90" height="97" viewBox="0 0 90 97" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+    <svg width="90" height="97" viewBox="0 0 90 97" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', ...style }}>
       <path d="M0 32.1162L30 48.1713V89.6291L0 72.8097V32.1162Z" fill={tertiary}/>
       <path d="M90 16.187L30 48.1616V88.9017L90 57.1424V16.187Z" fill={secondary}/>
       <path d="M89.4707 16.1846L30.001 47.9473L0.52832 32.0459L60 0.283203L89.4707 16.1846Z" fill={primary} stroke="black" strokeWidth="0.5"/>

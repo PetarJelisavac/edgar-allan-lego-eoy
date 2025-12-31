@@ -13,7 +13,7 @@ function BrickVertical({ style, colorPalette }: BrickVerticalProps) {
   // const highlight = colorPalette?.highlight || '#169AFF'; // Unused for now
 
   return (
-    <svg width="46" height="100" viewBox="0 0 46 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+    <svg width="46" height="100" viewBox="0 0 46 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ zIndex: 0, ...style }}>
       <path d="M42.5664 14.4985L13.0673 30.3505L13.0674 97.7538L42.5664 81.954L42.5664 14.4985Z" fill={secondary}/>
       <path d="M0.0664062 23.4985L13.0664 30.4985V97.9985L0.0664062 90.9985V23.4985Z" fill={tertiary}/>
       <path d="M42.5664 14.765L13.0665 30.4986L0.0665357 23.4882L29.5664 7.76511L42.5664 14.765Z" fill={primary}/>

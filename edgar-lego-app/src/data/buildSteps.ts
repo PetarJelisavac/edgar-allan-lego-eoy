@@ -90,4 +90,44 @@ export const buildSteps: BuildStep[] = [
       bricks: [],
     },
   },
+  {
+    id: 11,
+    type: 'build',
+    content: {
+      instruction: 'Add the two 1x2 bricks',
+      bricks: [],
+    },
+  },
+  {
+    id: 12,
+    type: 'build',
+    content: {
+      instruction: 'Add the vertical bricks with side pip',
+      bricks: [],
+    },
+  },
+  {
+    id: 13,
+    type: 'build',
+    content: {
+      instruction: 'Add the right side vertical bricks and 1x2 brick',
+      bricks: [],
+    },
+  },
+  {
+    id: 14,
+    type: 'build',
+    content: {
+      instruction: 'Add the 6x1 bricks and curved top pieces',
+      bricks: [],
+    },
+  },
+  {
+    id: 15,
+    type: 'build',
+    content: {
+      instruction: 'Add the 2x1 brick and top piece to complete the build',
+      bricks: [],
+    },
+  },
 ];
