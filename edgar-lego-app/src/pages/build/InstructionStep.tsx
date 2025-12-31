@@ -35,10 +35,16 @@ function InstructionStep() {
   const { stepId } = useParams();
   const navigate = useNavigate();
   const { markStepCompleted, selectedBrickColor } = useBuildStore();
+  const [animationKey, setAnimationKey] = React.useState(0);
 
   const currentStepIndex = parseInt(stepId || '0');
   const step = buildSteps[currentStepIndex];
   const config = instructionConfigs[currentStepIndex] || instructionConfigs[2];
+
+  // Force animation restart when step changes
+  React.useEffect(() => {
+    setAnimationKey(prev => prev + 1);
+  }, [currentStepIndex]);
 
   // Get the appropriate single brick asset based on selected color
   const getSingleBrickAsset = () => {
@@ -108,6 +114,7 @@ function InstructionStep() {
     return config.bricks.map((_, index) => `
       @keyframes fallBrick${index + 1} {
         0% { opacity: 0; transform: translateY(-300px); }
+        30% { opacity: 1; transform: translateY(-300x); }
         100% { opacity: 1; transform: translateY(0); }
       }
     `).join('\n');
@@ -196,9 +203,9 @@ function InstructionStep() {
           </button>
 
           {/* LEGO Bricks and Placeholders - scaled relative to container */}
-          <div className="absolute inset-0 hidden lg:block">
-            {/* Placeholder outlines */}
-            {config.placeholders.map((placeholder, index) => (
+          <div key={animationKey} className="absolute inset-0 hidden lg:block">
+            {/* Placeholder outlines - only show on first instruction step (no static bricks) */}
+            {(!config.staticBricks || config.staticBricks.length === 0) && config.placeholders.map((placeholder, index) => (
               <div
                 key={`placeholder-${index}`}
                 className="absolute animate-pulse"
@@ -225,12 +232,12 @@ function InstructionStep() {
                   className="absolute opacity-0"
                   style={{
                     left: `calc(${parseFloat(brick.left) / 930 * 100}%)`,
-                    top: `calc(${parseFloat(brick.finalTop) / 713 * 100}%)`,
+                    top: `calc(${parseFloat(brick.finalTop) / 712 * 100}%)`,
                     width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
-                    height: `calc(${parseFloat(brick.height) / 713 * 100}%)`,
+                    height: `calc(${parseFloat(brick.height) / 712 * 100}%)`,
                     animationName: animationName,
-                    animationDuration: '1.2s',
-                    animationTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    animationDuration: '2s',
+                    animationTimingFunction: 'ease-in-out',
                     animationFillMode: 'forwards',
                     animationDelay: brick.animationDelay,
                     zIndex: brick.zIndex,
