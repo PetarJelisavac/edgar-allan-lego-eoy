@@ -7,9 +7,9 @@ interface Brick3x1WhiteProps {
 }
 
 function Brick3x1White({ style, colorPalette }: Brick3x1WhiteProps) {
-  const secondary = colorPalette?.secondary || '#005FBE';
-  const tertiary = colorPalette?.tertiary || '#006DDA';
-  const highlight = colorPalette?.highlight || '#169AFF';
+  const secondary = colorPalette?.secondary || '#D9D9D9';
+  const tertiary = colorPalette?.tertiary || '#E5E5E5';
+  const highlight = colorPalette?.highlight || '#FFFFFF';
 
   return (
     <svg width="121" height="97" viewBox="0 0 121 97" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>

@@ -150,9 +150,9 @@ function InstructionStep() {
       case '1x2-side-pip':
         return <Brick1x2SidePip colorPalette={colorPalette} />;
       case '3x1-white':
-        return <Brick3x1White colorPalette={colorPalette} />;
+        return <Brick3x1White />;
       case '3x1-flat':
-        return <Brick3x1Flat colorPalette={colorPalette} />;
+        return <Brick3x1Flat />;
       case '8x2':
         return <Brick8x2 colorPalette={colorPalette} />;
       case 'single':

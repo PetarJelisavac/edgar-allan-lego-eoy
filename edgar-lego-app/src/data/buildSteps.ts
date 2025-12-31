@@ -74,4 +74,20 @@ export const buildSteps: BuildStep[] = [
       bricks: [],
     },
   },
+  {
+    id: 9,
+    type: 'build',
+    content: {
+      instruction: 'Add the 2x2 bricks',
+      bricks: [],
+    },
+  },
+  {
+    id: 10,
+    type: 'build',
+    content: {
+      instruction: 'Add the final two 2x1 bricks on top',
+      bricks: [],
+    },
+  },
 ];
