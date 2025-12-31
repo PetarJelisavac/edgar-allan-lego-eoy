@@ -111,6 +111,11 @@ function InstructionStep() {
   };
 
   const generateKeyframes = () => {
+    // Calculate starting Y position based on step index
+    // Steps 0-4: -300px, Steps 5-9: -275px, Steps 10-14: -250px, Steps 15+: -225px
+    const stepGroup = Math.floor(currentStepIndex / 5);
+    const startY = -300 + (stepGroup * 70);
+
     return config.bricks.map((brick, index) => {
       // Check if this brick has a gap-closing animation (finalLeft property)
       if (brick.finalLeft) {
@@ -118,25 +123,26 @@ function InstructionStep() {
         const finalLeft = parseFloat(brick.finalLeft);
         const horizontalShift = finalLeft - startLeft;
 
-        // Calculate intermediate stop position (60% down from -300px to final)
-        const intermediateY = -300 * 0.4; // Stop at 60% of the way down
+        // Scene-1.json pattern - uniform timing:
+        // 0-25%: fade in (0→100%) + scale up (50%→100%), stay in place
+        // 25-100%: move to final position (both vertical AND horizontal together)
 
         return `
           @keyframes fallBrick${index + 1} {
-            0% { opacity: 0; transform: translate(0, -300px); }
-            15% { opacity: 1; transform: translate(0, ${intermediateY}px); }
-            30% { opacity: 1; transform: translate(0, ${intermediateY}px); }
-            50% { opacity: 1; transform: translate(${horizontalShift}px, ${intermediateY}px); }
-            100% { opacity: 1; transform: translate(${horizontalShift}px, 0); }
+            0% { opacity: 0; transform: translate(0, ${startY}px) scale(0.5); }
+            25% { opacity: 1; transform: translate(0, ${startY}px) scale(1); }
+            100% { opacity: 1; transform: translate(${horizontalShift}px, 0) scale(1); }
           }
         `;
       } else {
-        // Regular fall animation
+        // Regular fall animation with Scene-1.json pattern
+        // 0-25%: fade in (0→100%) + scale up (50%→100%), stay at starting position
+        // 25-100%: move down to final position (0px)
         return `
           @keyframes fallBrick${index + 1} {
-            0% { opacity: 0; transform: translateY(-300px); }
-            30% { opacity: 1; transform: translateY(-300px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(${startY}px) scale(0.5); }
+            25% { opacity: 1; transform: translateY(${startY}px) scale(1); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
           }
         `;
       }
@@ -207,16 +213,72 @@ function InstructionStep() {
   };
 
   return (
-    <div className="w-full h-screen bg-[#fefff8] flex justify-center items-center p-6 relative">
-      {/* Main content container - centered and fills available space */}
-      <div className="relative w-full max-w-[930px] flex flex-col gap-[18px] items-center justify-center" style={{ height: 'calc(100vh - 48px)' }}>
-        {/* Main instruction background image - maintains aspect ratio */}
-        <div className="relative w-full max-w-[930px] aspect-[930/712]">
-          <img src={buildingBackground} alt="Building background" className="absolute inset-0 w-full h-full object-cover rounded-lg" />
+    <div style={{
+      width: '100%',
+      minHeight: '100vh',
+      backgroundColor: '#fefff8',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: 'clamp(16px, 2vw, 24px)',
+      paddingBottom: 'clamp(100px, 12vw, 140px)', // Extra padding for fixed buttons
+      position: 'relative'
+    }}>
+      {/* Background container - fills remaining vertical space */}
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: '930px',
+        margin: '0 auto',
+        flex: '1 1 0%',
+        minHeight: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        {/* Background image - fills entire container */}
+        <img
+          src={buildingBackground}
+          alt="Building background"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill',
+            borderRadius: '8px'
+          }}
+        />
+
+        {/* Animation container - maintains 930:712 aspect ratio for proper brick scaling */}
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '930 / 712',
+          maxHeight: '100%'
+        }}>
 
           {/* Step number badge - centered at top */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[10%] w-[60px] h-[60px] border border-black flex items-center justify-center">
-            <p className="font-epilogue font-semibold text-2xl text-black text-center leading-none">
+          <div style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: '10%',
+            width: 'clamp(50px, 6vw, 60px)',
+            height: 'clamp(50px, 6vw, 60px)',
+            border: '1px solid black',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <p style={{
+              fontFamily: 'Epilogue, sans-serif',
+              fontWeight: 600,
+              fontSize: 'clamp(20px, 2.5vw, 24px)',
+              color: 'black',
+              textAlign: 'center',
+              lineHeight: 1,
+              margin: 0
+            }}>
               {config.stepNumber}
             </p>
           </div>
@@ -224,23 +286,49 @@ function InstructionStep() {
           {/* Audio button - top right */}
           <button
             onClick={handleAudioToggle}
-            className="absolute right-4 top-4 w-[38px] h-[38px] border-none bg-transparent cursor-pointer p-0 hover:scale-110 transition-transform"
+            style={{
+              position: 'absolute',
+              right: 'clamp(12px, 1.5vw, 16px)',
+              top: 'clamp(12px, 1.5vw, 16px)',
+              width: 'clamp(32px, 4vw, 38px)',
+              height: 'clamp(32px, 4vw, 38px)',
+              border: 'none',
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+              padding: 0,
+              transition: 'transform 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >
-            <img src={audioIcon} alt="Audio toggle" className="block w-full h-full max-w-none" />
+            <img
+              src={audioIcon}
+              alt="Audio toggle"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                maxWidth: 'none'
+              }}
+            />
           </button>
 
           {/* LEGO Bricks and Placeholders - scaled relative to container */}
-          <div key={animationKey} className="absolute inset-0 hidden lg:block">
+          <div key={animationKey} style={{
+            position: 'absolute',
+            inset: 0
+          }}>
             {/* Placeholder outlines - only show on first instruction step (no static bricks) */}
             {(!config.staticBricks || config.staticBricks.length === 0) && config.placeholders.map((placeholder, index) => (
               <div
                 key={`placeholder-${index}`}
-                className="absolute animate-pulse"
                 style={{
+                  position: 'absolute',
                   left: `calc(${parseFloat(placeholder.left) / 930 * 100}%)`,
                   top: `calc(${parseFloat(placeholder.top) / 712 * 100}%)`,
                   width: `calc(${parseFloat(placeholder.width) / 930 * 100}%)`,
                   height: `calc(${parseFloat(placeholder.height) / 712 * 100}%)`,
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                 }}
               >
                 <InstructionPlaceholder />
@@ -259,7 +347,7 @@ function InstructionStep() {
                 width: `calc(${parseFloat(brick.width) / 930 * 100}%)`,
                 height: `calc(${parseFloat(brick.height) / 712 * 100}%)`,
                 animationName: animationName,
-                animationDuration: '2s',
+                animationDuration: '4s',
                 animationTimingFunction: 'ease-in-out',
                 animationFillMode: 'forwards',
                 animationDelay: brick.animationDelay,
@@ -275,8 +363,11 @@ function InstructionStep() {
               return (
                 <div
                   key={brick.id}
-                  className="absolute opacity-0"
-                  style={brickStyle}
+                  style={{
+                    ...brickStyle,
+                    position: 'absolute',
+                    opacity: 0
+                  }}
                 >
                   {renderBrickComponent(brick.type)}
                 </div>
@@ -284,27 +375,86 @@ function InstructionStep() {
             })}
           </div>
         </div>
+      </div>
 
-        {/* Bottom controls container */}
-        <div className="flex items-center justify-between w-full gap-4">
-          {/* Back button */}
-          <button
-            onClick={handleBack}
-            className="flex items-center justify-center border border-[#939393] rounded-[80px] px-6 py-4 sm:px-10 sm:py-8 bg-transparent cursor-pointer transition-transform hover:scale-105 shrink-0"
-          >
-            <div className="rotate-180 w-[20px] sm:w-[27px] h-[12px] sm:h-[15px]">
-              <img src={arrowBack} alt="Back" className="block w-full h-full max-w-none" />
-            </div>
-          </button>
+      {/* Bottom controls container - Fixed at bottom */}
+      <div style={{
+        position: 'fixed',
+        bottom: 'clamp(20px, 2vw, 40px)',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'calc(100% - clamp(32px, 4vw, 48px))',
+        maxWidth: '930px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 'clamp(12px, 1.5vw, 16px)',
+        zIndex: 50
+      }}>
+        {/* Back button */}
+        <button
+          onClick={handleBack}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #939393',
+            borderRadius: '80px',
+            padding: 'clamp(16px, 2vw, 32px) clamp(24px, 3vw, 40px)',
+            backgroundColor: '#fefff8',
+            cursor: 'pointer',
+            transition: 'transform 0.2s',
+            flexShrink: 0
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <div style={{
+            transform: 'rotate(180deg)',
+            width: 'clamp(20px, 2.5vw, 27px)',
+            height: 'clamp(12px, 1.5vw, 15px)'
+          }}>
+            <img
+              src={arrowBack}
+              alt="Back"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                maxWidth: 'none'
+              }}
+            />
+          </div>
+        </button>
 
-          {/* Next button */}
-          <button
-            onClick={handleNext}
-            className="flex-1 max-w-[399px] h-[52px] sm:h-[68px] bg-black text-[#fefff8] rounded-[100px] px-6 sm:px-[30px] py-3 font-petrona font-medium italic text-lg sm:text-2xl border-none cursor-pointer flex items-center justify-center transition-transform hover:scale-[1.02] overflow-hidden"
-          >
-            Next
-          </button>
-        </div>
+        {/* Next button */}
+        <button
+          onClick={handleNext}
+          style={{
+            flex: '1 1 0%',
+            maxWidth: '399px',
+            height: 'clamp(52px, 6vw, 68px)',
+            backgroundColor: 'black',
+            color: '#fefff8',
+            borderRadius: '100px',
+            padding: 'clamp(12px, 1.5vw, 13.5px) clamp(24px, 3vw, 30px)',
+            fontFamily: 'Petrona, serif',
+            fontWeight: 500,
+            fontStyle: 'italic',
+            fontSize: 'clamp(18px, 2vw, 24px)',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'transform 0.2s',
+            overflow: 'hidden'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          Next
+        </button>
       </div>
 
       {/* Animations */}

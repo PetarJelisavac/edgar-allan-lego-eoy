@@ -7,88 +7,55 @@ function Gallery() {
   const { galleryPhotos } = useBuildStore();
 
   return (
-    <div className="min-h-screen bg-[#fefff8] flex flex-col relative">
-      {/* LEGO Logo - Top Left */}
-      <div className="absolute top-6 left-6 z-10">
+    <div className="min-h-screen bg-[#fefff8] flex flex-col p-4 gap-10">
+      {/* LEGO Logo and Title */}
+      <div className="flex items-center w-full gap-10">
         <img
           src={logoLego}
           alt="Edgar Allan LEGO Logo"
-          className="w-[160px] h-auto"
+          className="w-[120px] h-[120px]"
         />
-      </div>
-
-      {/* Header */}
-      <div className="pt-24 px-6 pb-8">
-        <h1 className="font-epilogue font-semibold text-3xl lg:text-4xl text-black mb-2">
-          Your Gallery
+        <h1 className="font-['Epilogue'] font-semibold text-[40px] lg:text-[60px] leading-[1.1] text-black m-0">
+          Lego Gallery
         </h1>
-        <p className="font-epilogue text-lg text-gray-700">
-          Your completed LEGO Edgar creations
-        </p>
       </div>
 
       {/* Gallery Grid */}
-      <div className="flex-1 px-6 pb-6">
+      <div className="flex-1 flex items-start justify-center w-full">
         {galleryPhotos.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full gap-6">
+          <div className="flex flex-col items-center justify-center gap-6 py-20">
             <div className="text-6xl">📸</div>
-            <p className="font-epilogue text-xl text-gray-600 text-center">
+            <p className="font-['Epilogue'] text-xl text-gray-600 text-center max-w-md">
               No photos yet. Complete your build and take a photo to add it here!
             </p>
-            <button
-              onClick={() => navigate('/build')}
-              className="bg-black text-[#fefff8] px-8 py-4 rounded-[100px] font-petrona font-medium italic text-xl border-none cursor-pointer transition-transform hover:scale-[1.02]"
-            >
-              Start Building
-            </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 w-full max-w-[1136px]">
             {galleryPhotos.map((photo) => (
               <div
                 key={photo.id}
-                className="relative aspect-square bg-gray-200 rounded-lg overflow-hidden group cursor-pointer"
+                className="relative w-full h-[400px] overflow-hidden"
               >
                 <img
                   src={photo.imageUrl}
                   alt={`LEGO Edgar ${new Date(photo.timestamp).toLocaleDateString()}`}
-                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                  <p className="text-white text-sm font-epilogue">
-                    {new Date(photo.timestamp).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
-                  </p>
-                </div>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Back Button */}
-      <div className="px-6 pb-6">
+      {/* Take me home Button */}
+      <div className="flex justify-center w-full">
         <button
           onClick={() => navigate('/build')}
-          className="flex items-center gap-2 text-black font-epilogue font-semibold text-lg hover:underline"
+          className="bg-black text-[#fefff8] flex h-[68px] items-center justify-center px-[30px] py-[13.5px] rounded-[100px] w-full max-w-[399px] border-none cursor-pointer transition-transform hover:scale-[1.02]"
         >
-          <svg
-            className="w-6 h-6 rotate-180"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-          Back to Build
+          <p className="font-['Petrona'] font-medium italic text-[24px] text-nowrap">
+            Take me home
+          </p>
         </button>
       </div>
     </div>

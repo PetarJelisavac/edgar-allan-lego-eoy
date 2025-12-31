@@ -125,6 +125,7 @@ export const useBuildStore = create<BuildStore>()(
           completedSteps: [],
           selectedBrickColor: null,
           answers: {},
+          galleryPhotos: [],
         }),
     }),
     {
