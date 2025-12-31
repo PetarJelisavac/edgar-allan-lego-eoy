@@ -2,7 +2,7 @@
 
 export interface BrickConfig {
   id: string;
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat';
   left: string;
   top: string;
   finalTop: string; // Where brick lands after animation
@@ -21,7 +21,7 @@ export interface PlaceholderConfig {
 }
 
 export interface StaticBrickConfig {
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat';
   left: string;
   top: string;
   width: string;
@@ -419,6 +419,87 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '90px',
         height: '61px',
         animationDelay: '0.3s',
+      },
+    ],
+  },
+  // Step 7 (index 8) - Three 3x1 bricks (white, blue, flat)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=193-18206
+  8: {
+    stepNumber: 7,
+    staticBricks: [
+      // All bricks from steps 1-6
+      { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x1', left: '434px', top: '528px', width: '120px', height: '78.454px', zIndex: 1 },
+      { type: '4x2', left: '340px', top: '436px', width: '120px', height: '113px', zIndex: 2 },
+      { type: '4x2', left: '434px', top: '486px', width: '120px', height: '113px', zIndex: 3 },
+      { type: '4x1', left: '340px', top: '421px', width: '120px', height: '80.5px', zIndex: 4 },
+      { type: '4x1', left: '434px', top: '471px', width: '120px', height: '80.5px', zIndex: 5 },
+      { type: '8x2', left: '340px', top: '376px', width: '180px', height: '142px', zIndex: 5 },
+      { type: '2x2', left: '464px', top: '445px', width: '90px', height: '97px', zIndex: 6 },
+      { type: '4x1', left: '340px', top: '363px', width: '120px', height: '80.5px', zIndex: 7 },
+      { type: '2x1', left: '402px', top: '397px', width: '90px', height: '61px', zIndex: 8 },
+      { type: '4x1', left: '435px', top: '413px', width: '120px', height: '80.5px', zIndex: 9 },
+      { type: '2x1', left: '341px', top: '348px', width: '90px', height: '61px', zIndex: 10 },
+      { type: '2x1', left: '465px', top: '415px', width: '90px', height: '61px', zIndex: 15 },
+    ],
+    bricks: [
+      // New 3x1 brick (blue) - drops from above first (bottom layer)
+      {
+        id: 'brick-1',
+        type: '3x1',
+        left: '372px',
+        top: '-100px',
+        finalTop: '363px',
+        width: '120px',
+        height: '96px',
+        animationDelay: '0s',
+        zIndex: 12,
+      },
+      // New 3x1 White brick - drops from above second (middle layer)
+      {
+        id: 'brick-2',
+        type: '3x1-white',
+        left: '374px',
+        top: '-100px',
+        finalTop: '348px',
+        width: '120px',
+        height: '96px',
+        animationDelay: '0.3s',
+        zIndex: 13,
+      },
+      // New 3x1 Flat brick - drops from above last (top layer)
+      {
+        id: 'brick-3',
+        type: '3x1-flat',
+        left: '375px',
+        top: '-100px',
+        finalTop: '333px',
+        width: '120px',
+        height: '96px',
+        animationDelay: '0.6s',
+        zIndex: 14,
+      },
+    ],
+    placeholders: [
+      {
+        left: '372px',
+        top: '363px',
+        width: '120px',
+        height: '96px',
+      },
+      {
+        left: '374px',
+        top: '348px',
+        width: '120px',
+        height: '96px',
+        animationDelay: '0.3s',
+      },
+      {
+        left: '375px',
+        top: '333px',
+        width: '120px',
+        height: '96px',
+        animationDelay: '0.6s',
       },
     ],
   },

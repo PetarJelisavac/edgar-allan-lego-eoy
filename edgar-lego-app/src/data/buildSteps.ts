@@ -62,7 +62,15 @@ export const buildSteps: BuildStep[] = [
     id: 7,
     type: 'build',
     content: {
-      instruction: 'Final touches - you are almost done!',
+      instruction: 'Add the two 2x1 bricks on top',
+      bricks: [],
+    },
+  },
+  {
+    id: 8,
+    type: 'build',
+    content: {
+      instruction: 'Add the white and blue 3x1 bricks',
       bricks: [],
     },
   },
