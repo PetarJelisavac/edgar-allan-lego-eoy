@@ -89,7 +89,7 @@ function CompletedScreen() {
       };
       addPhoto(photo);
       setCapturedImage(null);
-      navigate('/build/gallery');
+      navigate('/gallery');
     }
   };
 
@@ -104,7 +104,7 @@ function CompletedScreen() {
   };
 
   const handleBack = () => {
-    navigate('/build');
+    navigate('/');
   };
 
   return (

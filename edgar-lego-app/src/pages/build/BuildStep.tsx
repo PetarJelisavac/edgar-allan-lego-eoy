@@ -43,7 +43,7 @@ function BuildStep() {
   };
 
   const handleBack = () => {
-    navigate('/build');
+    navigate('/');
   };
 
   const handleNext = () => {
@@ -57,11 +57,11 @@ function BuildStep() {
 
     if (nextIndex >= buildSteps.length) {
       // All steps completed - navigate to completed screen
-      navigate('/build/completed');
+      navigate('/completed');
     } else {
       const nextStep = buildSteps[nextIndex];
       if (nextStep.type === 'build') {
-        navigate(`/build/instruction/${nextIndex}`);
+        navigate(`/instruction/${nextIndex}`);
       }
     }
   };
