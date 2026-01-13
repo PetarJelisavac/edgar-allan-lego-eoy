@@ -18,8 +18,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 }) => {
     return (
         <div
-            className={`h-screen w-full relative flex flex-col ${className}`}
-            style={{ backgroundColor }}
+            className={`w-full relative flex flex-col ${className}`}
+            style={{ backgroundColor, height: '100dvh' }}
         >
             {showLogo && (
                 <div className="absolute top-8 left-6 md:top-8 md:left-8 z-50">

@@ -221,7 +221,7 @@ function InstructionStep() {
   };
 
   return (
-    <PageLayout showLogo={false} className="p-4 pb-[max(16px,env(safe-area-inset-bottom))]" contentClassName="justify-center items-center">
+    <PageLayout showLogo={false} className="p-4 pb-[max(80px,calc(env(safe-area-inset-bottom)+16px))]" contentClassName="justify-center items-center">
       {/* Main container - matches Figma container_main */}
       <div className="w-full max-w-[930px] flex flex-col gap-[18px] flex-1 min-h-0 overflow-hidden">
         {/* Background container - blue area from Figma */}
