@@ -68,7 +68,7 @@ function BuildStep() {
         </div>
 
         {/* Color Cards Grid Container - fills remaining space */}
-        <div className="flex-1 px-5 pb-5 w-full overflow-auto flex items-center justify-center">
+        <div className="flex-1 px-5 pb-[max(20px,calc(env(safe-area-inset-bottom)+8px))] w-full overflow-auto flex items-center justify-center">
           <div className="color-picker-grid w-full max-w-[1440px] mx-auto">
             {colorOptions.map((color) => (
               <button
