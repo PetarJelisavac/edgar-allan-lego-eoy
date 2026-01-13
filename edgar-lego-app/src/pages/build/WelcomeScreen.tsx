@@ -7,7 +7,7 @@ function WelcomeScreen() {
 
   return (
     <div 
-      className="bg-[#fefff8] flex items-center justify-center px-5 py-10 lg:px-16 relative w-full"
+      className="bg-[#fefff8] flex items-center justify-center px-5 py-5 lg:px-16 relative w-full"
       style={{ minHeight: '100svh' }}
     >
       {/* container-main - max 1440px */}
