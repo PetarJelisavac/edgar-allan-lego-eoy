@@ -1,8 +1,24 @@
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '../../components/layout/PageLayout';
+import { useBuildStore, brickColorPalettes } from '../../store/buildStore';
+import EdgarLego from '../../components/bricks/EdgarLego';
+import marqueeSvg from '../../assets/images/Marqee 1.svg';
+
+// Background colors matching the color picker cards
+const colorBackgrounds: Record<string, string> = {
+  'Baddy Blue': '#CCE5FF',
+  'Wine': '#FED4E5',
+  'Sunshine': '#FFDE96',
+  'Rojo': '#FFC1C1',
+  'Coal': '#D9D9D9',
+};
 
 function CompletedScreen() {
   const navigate = useNavigate();
+  const { selectedBrickColor } = useBuildStore();
+  
+  // Get background color based on selected brick color
+  const backgroundColor = selectedBrickColor ? colorBackgrounds[selectedBrickColor] : '#CCE5FF';
 
   const handleStartAgain = () => {
     navigate('/');
@@ -10,83 +26,32 @@ function CompletedScreen() {
 
   return (
     <PageLayout showLogo={false} className="overflow-hidden pb-[max(20px,calc(env(safe-area-inset-bottom)+8px))]" contentClassName="justify-center items-center">
-      <div style={{
-        width: '937px',
-        maxWidth: '100%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '18px',
-        display: 'flex',
-        position: 'relative',
-        zIndex: 1,
-        padding: '24px' // Added padding that was on the outer container
-      }}>
-        <div style={{
-          alignSelf: 'stretch',
-          textAlign: 'center',
-          color: 'black',
-          fontSize: 'clamp(24px, 3vw, 36px)',
-          fontFamily: 'Epilogue, sans-serif',
-          fontWeight: 600,
-          lineHeight: 1.3,
-          wordWrap: 'break-word',
-          marginBottom: '12px'
-        }}>
-          We did it!
+      {/* Main content container */}
+      <div className="w-full max-w-[930px] flex flex-col gap-[18px] flex-1 min-h-0 overflow-hidden p-4">
+        {/* Background container with EdgarLego figure */}
+        <div 
+          className="relative flex-1 rounded-lg min-h-[300px] overflow-hidden flex items-center justify-center"
+          style={{ backgroundColor }}
+        >
+          <EdgarLego 
+            colorPalette={selectedBrickColor ? brickColorPalettes[selectedBrickColor] : undefined}
+            className="h-[90%] w-auto"
+            style={{ maxHeight: '500px' }}
+          />
         </div>
 
-        <div style={{
-          alignSelf: 'stretch',
-          textAlign: 'center',
-          color: 'black',
-          fontSize: 'clamp(16px, 2vw, 18px)',
-          fontFamily: 'Epilogue, sans-serif',
-          fontWeight: 400,
-          lineHeight: 1.5,
-          wordWrap: 'break-word',
-          marginBottom: '24px'
-        }}>
-          Great job! You've completed your build.
-        </div>
-
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          flexWrap: 'wrap'
-        }}>
+        {/* Button wrapper */}
+        <div className="flex items-center justify-center w-full h-[52px] sm:h-[68px] shrink-0">
           <button
             onClick={handleStartAgain}
-            style={{
-              backgroundColor: 'black',
-              color: '#fefff8',
-              padding: 'clamp(10px, 1.5vw, 13.5px) clamp(20px, 2.5vw, 30px)',
-              height: 'clamp(44px, 5vw, 68px)',
-              borderRadius: '9999px',
-              fontFamily: 'Petrona, serif',
-              fontWeight: 500,
-              fontStyle: 'italic',
-              fontSize: 'clamp(16px, 2vw, 24px)',
-              lineHeight: 'normal',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 0.2s',
-              minWidth: 'clamp(150px, 20vw, 200px)'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            className="h-full bg-black text-[#fefff8] rounded-full px-6 sm:px-[30px] font-['Petrona'] font-medium italic text-lg sm:text-2xl border-none cursor-pointer flex items-center justify-center transition-transform hover:scale-[1.02] min-w-[180px] sm:min-w-[208px]"
           >
             Start Again
           </button>
         </div>
       </div>
 
+      {/* Marquee effect with We did it SVG */}
       <div
         style={{
           position: 'fixed',
@@ -102,34 +67,40 @@ function CompletedScreen() {
           className="marquee-track"
           style={{
             display: 'flex',
-            gap: '60px',
+            gap: '80px',
             width: 'fit-content'
           }}
         >
-          {[...Array(20)].map((_, i) => (
-            <span
-              key={i}
+          {[...Array(10)].flatMap((_, i) => [
+            <span key={`boom-${i}`} style={{ fontSize: '150px', flexShrink: 0 }}>💥</span>,
+            <img
+              key={`svg1-${i}`}
+              src={marqueeSvg}
+              alt="We did it!"
               style={{
-                fontFamily: 'Epilogue, sans-serif',
-                fontWeight: 600,
-                fontSize: 'clamp(80px, 20vw, 270px)',
-                lineHeight: 1,
-                whiteSpace: 'nowrap',
-                WebkitTextStroke: 'clamp(1px, 0.3vw, 3px) black',
-                WebkitTextFillColor: 'transparent',
-                color: 'transparent',
+                height: '200px',
+                width: 'auto',
                 flexShrink: 0
               }}
-            >
-              💥 We did it! 🧰
-            </span>
-          ))}
+            />,
+            <span key={`toolbox-${i}`} style={{ fontSize: '150px', flexShrink: 0 }}>🧰</span>,
+            <img
+              key={`svg2-${i}`}
+              src={marqueeSvg}
+              alt="We did it!"
+              style={{
+                height: '200px',
+                width: 'auto',
+                flexShrink: 0
+              }}
+            />
+          ])}
         </div>
       </div>
 
       <style>{`
         .marquee-track {
-          animation: marquee-scroll 120s linear infinite;
+          animation: marquee-scroll 60s linear infinite;
         }
 
         @keyframes marquee-scroll {

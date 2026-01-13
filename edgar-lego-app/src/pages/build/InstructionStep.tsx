@@ -6,7 +6,6 @@ import { instructionConfigs } from '../../data/instructionConfigs';
 import PageLayout from '../../components/layout/PageLayout';
 
 
-import audioIcon from '../../assets/images/audio-icon.svg';
 import arrowBack from '../../assets/images/arrow-back.svg';
 
 import brickBaddyBlue from '../../assets/images/brick-baddy-blue.svg';
@@ -32,6 +31,15 @@ import Brick8x2 from '../../components/bricks/Brick8x2';
 import InstructionPlaceholder from '../../components/bricks/InstructionPlaceholder';
 import { brickColorPalettes } from '../../store/buildStore';
 
+// Background colors matching the color picker cards
+const colorBackgrounds: Record<string, string> = {
+  'Baddy Blue': '#CCE5FF',
+  'Wine': '#FED4E5',
+  'Sunshine': '#FFDE96',
+  'Rojo': '#FFC1C1',
+  'Coal': '#D9D9D9',
+};
+
 function InstructionStep() {
   const { stepId } = useParams();
   const navigate = useNavigate();
@@ -41,6 +49,9 @@ function InstructionStep() {
   const currentStepIndex = parseInt(stepId || '0');
   const step = buildSteps[currentStepIndex];
   const config = instructionConfigs[currentStepIndex] || instructionConfigs[2];
+  
+  // Get background color based on selected brick color
+  const backgroundColor = selectedBrickColor ? colorBackgrounds[selectedBrickColor] : '#CCE5FF';
 
   // Force animation restart when step changes
   React.useEffect(() => {
@@ -105,10 +116,6 @@ function InstructionStep() {
         }
       }
     }
-  };
-
-  const handleAudioToggle = () => {
-    console.log('Audio toggle clicked');
   };
 
   const generateKeyframes = () => {
@@ -224,15 +231,8 @@ function InstructionStep() {
     <PageLayout showLogo={false} className="p-4 pb-[max(24px,calc(env(safe-area-inset-bottom)+8px))]" contentClassName="justify-center items-center">
       {/* Main container - matches Figma container_main */}
       <div className="w-full max-w-[930px] flex flex-col gap-[18px] flex-1 min-h-0 overflow-hidden">
-        {/* Background container - blue area from Figma */}
-        <div className="relative flex-1 bg-[#cce5ff] rounded-lg min-h-[300px] overflow-hidden">
-          <button
-            onClick={handleAudioToggle}
-            className="absolute right-[12px] top-[12px] sm:right-[22px] sm:top-[21px] w-[28px] h-[28px] sm:w-[38px] sm:h-[38px] border-none bg-transparent cursor-pointer p-0 hover:scale-110 transition-transform z-10"
-          >
-            <img src={audioIcon} alt="Audio toggle" className="block w-full h-full max-w-none" />
-          </button>
-
+        {/* Background container - color matches selected brick color */}
+        <div className="relative flex-1 rounded-lg min-h-[300px] overflow-hidden" style={{ backgroundColor }}>
           {/* Step number badge - positioned relative to background container (not animation wrapper) */}
           <div className="absolute left-1/2 -translate-x-1/2 top-[20px] sm:top-[30px] w-[45px] h-[50px] sm:w-[55px] sm:h-[60px] border border-black bg-transparent flex items-center justify-center z-20">
             <p className="font-epilogue font-semibold text-xl sm:text-2xl text-black text-center leading-none">
@@ -343,7 +343,7 @@ function InstructionStep() {
           {/* Next button - matches Figma button_next (399x68px) */}
           <button
             onClick={handleNext}
-            className="flex-1 max-w-[399px] h-full bg-black text-[#fefff8] rounded-full px-6 sm:px-[30px] font-petrona font-medium italic text-lg sm:text-2xl border-none cursor-pointer flex items-center justify-center transition-transform hover:scale-[1.02] overflow-hidden"
+            className="flex-1 max-w-[399px] h-full bg-black text-[#fefff8] rounded-full px-6 sm:px-[30px] font-['Petrona'] font-medium italic text-lg sm:text-2xl border-none cursor-pointer flex items-center justify-center transition-transform hover:scale-[1.02] overflow-hidden"
           >
             Next
           </button>
