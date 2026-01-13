@@ -120,7 +120,7 @@ function BuildStep() {
           }
           
           .card-inner {
-            gap: 64px;
+            gap: 16px;
           }
           
           .color-card[data-color="baddy-blue"] { 
