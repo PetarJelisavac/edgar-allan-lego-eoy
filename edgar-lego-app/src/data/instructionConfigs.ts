@@ -46,7 +46,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     stepNumber: 1,
     staticBricks: [], // First step, no previous bricks
     bricks: [
-      // Left 4x1 brick - drops from above
+      // Left 4x1 brick - drops from above (back)
       {
         id: 'brick-1',
         type: '4x1',
@@ -56,9 +56,9 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '78.454px',
         animationDelay: '0s',
-        zIndex: 2,
+        zIndex: 1,
       },
-      // Right 4x1 brick - drops from above
+      // Right 4x1 brick - drops from above (front)
       {
         id: 'brick-2',
         type: '4x1',
@@ -68,7 +68,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '78.454px',
         animationDelay: '0.3s',
-        zIndex: 1,
+        zIndex: 2,
       },
     ],
     placeholders: [
@@ -107,11 +107,11 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         top: '528px', // From Step 1 finalTop
         width: '120px',
         height: '78.454px',
-        zIndex: 1,
+        zIndex: 2,
       },
     ],
     bricks: [
-      // Left 4x2 brick - drops from above, on top of left 4x1
+      // Left 4x2 brick - drops from above, on top of left 4x1 (back)
       {
         id: 'brick-1',
         type: '4x2',
@@ -121,7 +121,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '113px',
         animationDelay: '0s',
-        zIndex: 2,
+        zIndex: 3,
       },
       // Right 4x2 brick - drops from above, on top of right 4x1 (front brick)
       {
@@ -133,7 +133,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '113px',
         animationDelay: '0.3s',
-        zIndex: 3,
+        zIndex: 4,
       },
     ],
     placeholders: [
@@ -172,7 +172,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         top: '528px', // From Step 1 finalTop
         width: '120px',
         height: '78.454px',
-        zIndex: 1,
+        zIndex: 2,
       },
       // Bricks from step 2 (4x2 bricks on top)
       {
@@ -181,7 +181,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         top: '436px', // From Step 2 finalTop
         width: '120px',
         height: '113px',
-        zIndex: 2,
+        zIndex: 3,
       },
       {
         type: '4x2',
@@ -189,11 +189,11 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         top: '486px', // From Step 2 finalTop
         width: '120px',
         height: '113px',
-        zIndex: 3,
+        zIndex: 4,
       },
     ],
     bricks: [
-      // New 4x1 brick on left - drops from above, on top of left 4x2
+      // New 4x1 brick on left - drops from above, on top of left 4x2 (back)
       {
         id: 'brick-1',
         type: '4x1',
@@ -203,9 +203,9 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '80.5px',
         animationDelay: '0s',
-        zIndex: 4,
+        zIndex: 5,
       },
-      // New 4x1 brick on right - drops from above, on top of right 4x2
+      // New 4x1 brick on right - drops from above, on top of right 4x2 (front)
       {
         id: 'brick-2',
         type: '4x1',
@@ -215,7 +215,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         width: '120px',
         height: '80.5px',
         animationDelay: '0.3s',
-        zIndex: 5,
+        zIndex: 6,
       },
     ],
     placeholders: [

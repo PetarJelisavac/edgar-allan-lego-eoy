@@ -119,10 +119,9 @@ function InstructionStep() {
   };
 
   const generateKeyframes = () => {
-    // Calculate starting Y position based on step index
-    // Steps 0-4: -300px, Steps 5-9: -275px, Steps 10-14: -250px, Steps 15+: -225px
-    const stepGroup = Math.floor(currentStepIndex / 5);
-    const startY = -300 + (stepGroup * 25);
+    // Starting Y position for drop animation (above final position)
+    // /instruction/14 and /instruction/15 (stepNumber 13 and 14) need lower starting position
+    const startY = (config.stepNumber === 13 || config.stepNumber === 14) ? -220 : -300;
 
     return config.bricks.map((brick, index) => {
       // Check if this brick has a gap-closing animation (finalLeft property)
@@ -131,20 +130,32 @@ function InstructionStep() {
         const finalLeft = parseFloat(brick.finalLeft);
         const horizontalShift = finalLeft - startLeft;
 
-        // Include centering transform in all keyframes
+        // Gap-closing animation: scale in with bounce, then drop and slide
         return `
           @keyframes fallBrick${index + 1} {
-            0% { opacity: 0; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(0.5); }
-            25% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(1); }
+            /* Scale in with bounce (0-40%) */
+            0% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(0); }
+            5% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(0.78); }
+            10% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(1.2); }
+            20% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(0.96); }
+            30% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(1.01); }
+            40% { opacity: 1; transform: translate(-50%, -50%) translate(0, ${startY}px) scale(1); }
+            /* Drop down and slide (40-100%) */
             100% { opacity: 1; transform: translate(-50%, -50%) translate(${horizontalShift}px, 0) scale(1); }
           }
         `;
       } else {
-        // Regular fall animation - include centering transform
+        // Regular animation from JSON: scale in with bounce, then drop down
         return `
           @keyframes fallBrick${index + 1} {
-            0% { opacity: 0; transform: translate(-50%, -50%) translateY(${startY}px) scale(0.5); }
-            25% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(1); }
+            /* Scale in with bounce (0-40%) - from JSON layer 0 */
+            0% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(0); }
+            5% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(0.78); }
+            10% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(1.2); }
+            20% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(0.96); }
+            30% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(1.01); }
+            40% { opacity: 1; transform: translate(-50%, -50%) translateY(${startY}px) scale(1); }
+            /* Drop down (40-100%) - no overshoot */
             100% { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1); }
           }
         `;
@@ -230,7 +241,7 @@ function InstructionStep() {
   return (
     <PageLayout showLogo={false} className="p-4 pb-[max(24px,calc(env(safe-area-inset-bottom)+8px))]" contentClassName="justify-center items-center">
       {/* Main container - matches Figma container_main */}
-      <div className="w-full max-w-[930px] flex flex-col gap-[18px] flex-1 min-h-0 overflow-hidden">
+      <div className="w-full max-w-[930px] flex flex-col gap-[18px] flex-1 min-h-0">
         {/* Background container - color matches selected brick color */}
         <div className="relative flex-1 rounded-lg min-h-[300px] overflow-hidden" style={{ backgroundColor }}>
           {/* Step number badge - positioned relative to background container (not animation wrapper) */}
@@ -301,10 +312,10 @@ function InstructionStep() {
                   height: brick.height,
                   transform: 'translate(-50%, -50%)',
                   animationName: animationName,
-                  animationDuration: '4s',
-                  animationTimingFunction: 'ease-in-out',
+                  animationDuration: '1.6s',
+                  animationTimingFunction: 'linear', // Keyframes handle the easing
                   animationFillMode: 'forwards',
-                  animationDelay: brick.animationDelay,
+                  animationDelay: '0ms', // All bricks animate simultaneously
                   zIndex: brick.zIndex,
                 };
 
