@@ -32,6 +32,14 @@ import BackSide from '../../components/bricks/BackSide';
 import BackSideRightColumn from '../../components/bricks/BackSideRightColumn';
 import RightSideColumn from '../../components/bricks/RightSideColumn';
 import BackCompleted from '../../components/bricks/BackCompleted';
+import BackSideStep1 from '../../components/bricks/BackSideStep1';
+import BackSideStep1Front from '../../components/bricks/BackSideStep1Front';
+import Brick4x1BackWhite from '../../components/bricks/Brick4x1BackWhite';
+import Brick1x2BackWhite from '../../components/bricks/Brick1x2BackWhite';
+import Brick1x1BackWhite from '../../components/bricks/Brick1x1BackWhite';
+import LeftSideZIndex0 from '../../components/bricks/LeftSideZIndex0';
+import LeftSideZIndex2 from '../../components/bricks/LeftSideZIndex2';
+import Circle from '../../components/bricks/Circle';
 import Brick3x1White from '../../components/bricks/Brick3x1White';
 import Brick3x1Flat from '../../components/bricks/Brick3x1Flat';
 import Brick8x2 from '../../components/bricks/Brick8x2';
@@ -127,8 +135,67 @@ function InstructionStep() {
 
   const generateKeyframes = () => {
     // Starting Y position for drop animation (above final position)
-    // /instruction/14, /instruction/15, /instruction/16 (stepNumber 13, 14, 15) need lower starting position
-    const startY = (config.stepNumber === 13 || config.stepNumber === 14 || config.stepNumber === 15) ? -220 : -300;
+    // /instruction/14, /instruction/15 (stepNumber 13, 14) need lower starting position
+    const startY = (config.stepNumber === 13 || config.stepNumber === 14) ? -220 : -300;
+
+    // Special animations for step 16 (stepNumber 15) - circle scale in
+    if (config.stepNumber === 15) {
+      return config.bricks.map((brick, index) => {
+        // Circle: scale in with bounce (no drop)
+        if (brick.type === 'circle') {
+          return `
+            @keyframes fallBrick${index + 1} {
+              0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+              10% { opacity: 1; transform: translate(-50%, -50%) scale(0.78); }
+              20% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+              40% { opacity: 1; transform: translate(-50%, -50%) scale(0.96); }
+              60% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+              80% { opacity: 1; transform: translate(-50%, -50%) scale(0.99); }
+              100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            }
+          `;
+        }
+        // Fallback
+        return '';
+      }).join('\n');
+    }
+
+    // Special animations for step 17 (stepNumber 16) - pips scale in at start position, then slide right to final
+    if (config.stepNumber === 16) {
+      return config.bricks.map((brick, index) => {
+        const startLeft = parseFloat(brick.left);
+        const finalLeft = brick.finalLeft ? parseFloat(brick.finalLeft) : startLeft;
+        const horizontalShift = finalLeft - startLeft;
+        
+        return `
+          @keyframes fallBrick${index + 1} {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0) translateX(0); }
+            10% { opacity: 1; transform: translate(-50%, -50%) scale(0.78) translateX(0); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) translateX(0); }
+            35% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateX(0); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateX(0); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateX(${horizontalShift}px); }
+          }
+        `;
+      }).join('\n');
+    }
+
+    // Special animations for step 18 (stepNumber 17) - white back bricks scale in
+    if (config.stepNumber === 17) {
+      return config.bricks.map((_, index) => {
+        return `
+          @keyframes fallBrick${index + 1} {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            10% { opacity: 1; transform: translate(-50%, -50%) scale(0.78); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+            40% { opacity: 1; transform: translate(-50%, -50%) scale(0.96); }
+            60% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(0.99); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          }
+        `;
+      }).join('\n');
+    }
 
     return config.bricks.map((brick, index) => {
       // Check if this brick has a gap-closing animation (finalLeft property)
@@ -219,6 +286,22 @@ function InstructionStep() {
         return <RightSideColumn colorPalette={colorPalette} />;
       case 'back-completed':
         return <BackCompleted colorPalette={colorPalette} />;
+      case 'back-side-step1':
+        return <BackSideStep1 colorPalette={colorPalette} />;
+      case 'back-side-step1-front':
+        return <BackSideStep1Front colorPalette={colorPalette} />;
+      case '4x1-back-white':
+        return <Brick4x1BackWhite />;
+      case '1x2-back-white':
+        return <Brick1x2BackWhite />;
+      case '1x1-back-white':
+        return <Brick1x1BackWhite />;
+      case 'left-side-z0':
+        return <LeftSideZIndex0 colorPalette={colorPalette} />;
+      case 'left-side-z2':
+        return <LeftSideZIndex2 colorPalette={colorPalette} />;
+      case 'circle':
+        return <Circle colorPalette={colorPalette} />;
       case 'vertical-white':
         return <BrickVertical colorPalette={{ name: 'Baddy Blue', primary: '#FFFFFF', secondary: '#D9D9D9', tertiary: '#E5E5E5', highlight: '#FFFFFF' }} />;
       case 'vertical-blue':

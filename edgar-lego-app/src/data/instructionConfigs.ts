@@ -2,7 +2,7 @@
 
 export interface BrickConfig {
   id: string;
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | '1x1-side-pip' | '1x2-side-pip-new' | '1x1-side-pip-white' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top' | 'back-side' | 'back-side-right-column' | 'right-side-column' | 'back-completed';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | '1x1-side-pip' | '1x2-side-pip-new' | '1x1-side-pip-white' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top' | 'back-side' | 'back-side-right-column' | 'right-side-column' | 'back-completed' | 'back-side-step1' | 'back-side-step1-front' | 'circle' | '4x1-back-white' | '1x2-back-white' | '1x1-back-white';
   left: string;
   top: string;
   finalTop: string; // Where brick lands after animation
@@ -23,7 +23,7 @@ export interface PlaceholderConfig {
 }
 
 export interface StaticBrickConfig {
-  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | '1x1-side-pip' | '1x2-side-pip-new' | '1x1-side-pip-white' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top' | 'back-side' | 'back-side-right-column' | 'right-side-column' | 'back-completed';
+  type: '1x2' | '2x1' | '2x2' | '3x1' | '4x1' | '4x2' | '6x1' | '8x2' | 'single' | '3x1-white' | '3x1-flat' | '1x2-side-pip' | '1x1-side-pip' | '1x2-side-pip-new' | '1x1-side-pip-white' | 'vertical-white' | 'vertical-blue' | 'top-curve-right' | 'top-left-curve' | 'top' | 'back-side' | 'back-side-right-column' | 'right-side-column' | 'back-completed' | 'back-side-step1' | 'back-side-step1-front' | 'circle' | '4x1-back-white' | '1x2-back-white' | '1x1-back-white' | 'left-side-z0' | 'left-side-z2';
   left: string;
   top: string;
   width: string;
@@ -882,52 +882,10 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     ],
     placeholders: [],
   },
-  // Step 13 (index 14) - BackSide with two pips dropping (1x2-new left, 1x2 right)
-  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=247-23854
+  // Step 13 (index 14) - Two 6x1 bricks and four curved top pieces (2x TopCurveRight + 2x TopLeftCurve)
+  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=194-20187
   14: {
     stepNumber: 13,
-    staticBricks: [
-      // BackSide replaces all individual bricks for this step only
-      // Aligned with individual bricks: leftmost at 340px, topmost at 247px
-      { type: 'back-side', left: '340px', top: '247px', width: '211px', height: '358px', zIndex: 1 },
-      // Right side column overlay - z-index 5 to overlap the 1x1 pip (z-index 2)
-      { type: 'right-side-column', left: '461px', top: '324px', width: '90px', height: '149px', zIndex: 5 },
-    ],
-    bricks: [
-      // 1x2 Side Pip New - drops on left side, lands on yellow stud
-      // z-index 3 to stay in front of BackSide (z-index 2)
-      {
-        id: 'brick-1',
-        type: '1x2-side-pip-new',
-        left: '366px',
-        finalLeft: '366px',
-        top: '-100px',
-        finalTop: '320px',
-        width: '65px',
-        height: '106px',
-        animationDelay: '0s',
-        zIndex: 3,
-      },
-      // 1x1 Side Pip White - drops below and right (z-index 0 so BackSide overlaps it)
-      {
-        id: 'brick-2',
-        type: '1x1-side-pip-white',
-        left: '431px',
-        finalLeft: '431px',
-        top: '-100px',
-        finalTop: '390px',
-        width: '65px',
-        height: '70px',
-        animationDelay: '0.3s',
-        zIndex: 2,
-      },
-    ],
-    placeholders: [],
-  },
-  // Step 14 (index 15) - Two 6x1 bricks and four curved top pieces (2x TopCurveRight + 2x TopLeftCurve)
-  // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=194-20187
-  15: {
-    stepNumber: 14,
     staticBricks: [
       // All bricks from steps 1-13
       { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
@@ -1042,10 +1000,10 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     ],
     placeholders: [],
   },
-  // Step 15 (index 16) - 2x1 brick and large top piece to complete the build
+  // Step 14 (index 15) - 2x1 brick and large top piece to complete the build
   // Based on Figma design: https://www.figma.com/design/lLpX6OSZHOGKcHxsuOnJQ3/EOY_LegoAssets?node-id=194-20699
-  16: {
-    stepNumber: 15,
+  15: {
+    stepNumber: 14,
     staticBricks: [
       // All bricks from steps 1-14
       { type: '4x1', left: '340px', top: '478px', width: '120px', height: '78.454px', zIndex: 2 },
@@ -1118,16 +1076,111 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
     ],
     placeholders: [],
   },
-  // Step 16 (index 17) - BackCompleted replaces all individual bricks
-  // Same position as BackSide from step 14
+  // Step 15 (index 16) - Circle animated, BackSideStep1 static
+  16: {
+    stepNumber: 15,
+    staticBricks: [
+      { type: 'back-side-step1', left: '340px', top: '219px', width: '212px', height: '386px', zIndex: 1 },
+    ],
+    bricks: [
+      {
+        id: 'circle',
+        type: 'circle',
+        left: '228px',
+        top: '450px',
+        finalTop: '450px',
+        width: '437px',
+        height: '266px',
+        animationDelay: '0s',
+        zIndex: 0,
+      },
+    ],
+    placeholders: [],
+  },
+  // Step 16 (index 17) - Left side layers with pips scale in
   17: {
     stepNumber: 16,
     staticBricks: [
-      // BackCompleted - single SVG replacing all individual bricks
-      // Position matches BackSide: left 340px, top 247px
-      { type: 'back-completed', left: '340px', top: '219px', width: '212px', height: '386px', zIndex: 1 },
+      { type: 'left-side-z0', left: '340px', top: '219px', width: '212px', height: '386px', zIndex: 0 },
+      { type: 'left-side-z2', left: '342px', top: '220px', width: '208px', height: '256px', zIndex: 2 },
     ],
-    bricks: [],
+    bricks: [
+      // 1x2 Side Pip (left) - scale in at start, slide right to final
+      {
+        id: '1x2-side-pip-left',
+        type: '1x2-side-pip-new',
+        left: '220px',
+        top: '320px',
+        finalTop: '320px',
+        finalLeft: '370px',
+        width: '65px',
+        height: '106px',
+        animationDelay: '0s',
+        zIndex: 1,
+      },
+      // 1x1 Side Pip (right) - scale in at start, slide right to final (same 110px movement)
+      {
+        id: '1x1-side-pip-right',
+        type: '1x1-side-pip-white',
+        left: '320px',
+        top: '390px',
+        finalTop: '390px',
+        finalLeft: '430px',
+        width: '65px',
+        height: '70px',
+        animationDelay: '0s',
+        zIndex: 1,
+      },
+    ],
+    placeholders: [],
+  },
+  // Step 17 (index 18) - Layered approach with white back bricks scale in
+  18: {
+    stepNumber: 17,
+    staticBricks: [
+      { type: 'left-side-z0', left: '340px', top: '219px', width: '212px', height: '386px', zIndex: 0 },
+      { type: '1x2-side-pip-new', left: '370px', top: '320px', width: '65px', height: '106px', zIndex: 1 },
+      { type: '1x1-side-pip-white', left: '430px', top: '390px', width: '65px', height: '70px', zIndex: 1 },
+      { type: 'left-side-z2', left: '342px', top: '220px', width: '208px', height: '256px', zIndex: 2 },
+    ],
+    bricks: [
+      // 4x1 Back White - scale in
+      {
+        id: '4x1-back-white',
+        type: '4x1-back-white',
+        left: '180px',
+        top: '400px',
+        finalTop: '390px',
+        width: '71px',
+        height: '101px',
+        animationDelay: '0s',
+        zIndex: 1,
+      },
+      // 1x2 Back White - scale in
+      {
+        id: '1x2-back-white',
+        type: '1x2-back-white',
+        left: '300px',
+        top: '400px',
+        finalTop: '400px',
+        width: '43px',
+        height: '88px',
+        animationDelay: '0.2s',
+        zIndex: 2,
+      },
+      // 1x1 Back White - scale in
+      {
+        id: '1x1-back-white',
+        type: '1x1-back-white',
+        left: '240px',
+        top: '490px',
+        finalTop: '390px',
+        width: '64px',
+        height: '115px',
+        animationDelay: '0.4s',
+        zIndex: 1,
+      },
+    ],
     placeholders: [],
   },
 };
