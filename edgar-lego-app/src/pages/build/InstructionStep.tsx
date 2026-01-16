@@ -138,8 +138,8 @@ function InstructionStep() {
 
   const generateKeyframes = () => {
     // Starting Y position for drop animation (above final position)
-    // /instruction/14, /instruction/15 (stepNumber 13, 14) need lower starting position
-    const startY = (config.stepNumber === 13 || config.stepNumber === 14) ? -220 : -300;
+    // Steps 11-15 need lower starting position for mobile visibility
+    const startY = (config.stepNumber >= 11 && config.stepNumber <= 15) ? -220 : -300;
 
     // Special animations for step 16 (stepNumber 15) - circle scale in
     if (config.stepNumber === 15) {

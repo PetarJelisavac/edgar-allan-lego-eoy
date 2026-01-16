@@ -1086,9 +1086,9 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'circle',
         type: 'circle',
-        left: '228px',
+        left: '220px',
         top: '450px',
-        finalTop: '450px',
+        finalTop: '400px',
         width: '437px',
         height: '266px',
         animationDelay: '0s',
@@ -1109,7 +1109,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: '1x2-side-pip-left',
         type: '1x2-side-pip-new',
-        left: '220px',
+        left: '300px',
         top: '320px',
         finalTop: '320px',
         finalLeft: '370px',
@@ -1118,11 +1118,11 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
         animationDelay: '0s',
         zIndex: 1,
       },
-      // 1x1 Side Pip (right) - scale in at start, slide right to final (same 110px movement)
+      // 1x1 Side Pip (right) - scale in at start, slide right to final
       {
         id: '1x1-side-pip-right',
         type: '1x1-side-pip-white',
-        left: '320px',
+        left: '380px',
         top: '390px',
         finalTop: '390px',
         finalLeft: '430px',
@@ -1148,7 +1148,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: '4x1-back-white',
         type: '4x1-back-white',
-        left: '180px',
+        left: '260px',
         top: '400px',
         finalTop: '390px',
         width: '71px',
@@ -1160,7 +1160,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: '1x2-back-white',
         type: '1x2-back-white',
-        left: '300px',
+        left: '380px',
         top: '400px',
         finalTop: '400px',
         width: '43px',
@@ -1172,7 +1172,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: '1x1-back-white',
         type: '1x1-back-white',
-        left: '240px',
+        left: '320px',
         top: '490px',
         finalTop: '390px',
         width: '64px',
@@ -1193,7 +1193,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'door-left',
         type: 'doors-left-side',
-        left: '195px',
+        left: '275px',
         top: '382px',
         finalLeft: '348px',
         finalTop: '290px',
@@ -1205,7 +1205,7 @@ export const instructionConfigs: Record<number, InstructionConfig> = {
       {
         id: 'door-right',
         type: 'doors-right-side',
-        left: '291px',
+        left: '371px',
         top: '392px',
         finalLeft: '400px',
         finalTop: '315px',
