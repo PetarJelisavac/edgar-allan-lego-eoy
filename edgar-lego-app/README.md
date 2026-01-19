@@ -1,4 +1,4 @@
-# Edgar Allan LEGO App
+# Edgar Allan EOY
 
 A multi-step interactive LEGO building experience with two paths: ordering LEGO sets and guided building with personalized questions.
 
